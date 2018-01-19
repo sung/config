@@ -1,0 +1,71 @@
+## PDN
+#+ SLX-8764.Homo_sapiens.v1/***
+#+ SLX-8765.Mus_musculus.v1/***
+#+ SLX-8765.Homo_sapiens.v1/***
+#+ SLX-8767.Homo_sapiens.v1/***
+#+ SLX-8768.Mus_musculus.v1/***
+#+ SLX-8768.Homo_sapiens.v1/***
+#+ SLX-9610.Homo_sapiens.v1/***
+#+ SLX-9610.Mus_musculus.v1/***
+#+ SLX-9611.Homo_sapiens.v1/***
+#+ SLX-9612.Mus_musculus.v1/***
+#+ SLX-9612.Homo_sapiens.v1/***
+#+ SLX-9613.Homo_sapiens.v1/***
+#+ SLX-9790.Homo_sapiens.v1/***
+## Claire RNA-Seq
+#+ SLX-8082.v1/***
+#+ SLX-8082.Mus_musculus.v1/***
+#+ SLX-8769.v1/***
+#+ SLX-8769.Mus_musculus.v1/***
+#+ SLX-8770.v1/***
+#+ SLX-8770.Mus_musculus.v1/***
+#+ SLX-9608.Mus_musculus.v1/***
+#+ SLX-9609.Mus_musculus.v1/***
+#+ SLX-9614.Mus_musculus.v1/***
+#+ SLX-9614.Homo_sapiens.v1/***
+#+ SLX-9615.Mus_musculus.v1/***
+#+ SLX-9615.Homo_sapiens.v1/***
+## Claire Chip-Seq
+#+ SLX-8766.Homo_sapiens.v1/***
+## Derina
+#+ SLX-9175.Mus_musculus.v1/***
+#+ SLX-9175.Mus_musculus.v2/***
+## Cynthia Haloplex
+#+ SLX-7634.Homo_sapiens.v1/***
+#+ SLX-9338.Homo_sapiens.v1/***
+## FG mRNA-Seq
+#+ SLX-9170.v1/***
+#+ SLX-9171.v1/***
+#+ SLX-9171.v1/***
+## FG totalRNA-Seq (GRCh37)
+#+ SLX-9168.Homo_sapiens.v1/***
+#+ SLX-9168.Homo_sapiens.v2/***
+#+ SLX-9168.Homo_sapiens.v3/***
+#+ SLX-9168.Homo_sapiens.v4/***
+#+ SLX-9168.Homo_sapiens.v5/***
+#+ SLX-9168.Homo_sapiens.SE125.v1/***
+#+ SLX-9169.Homo_sapiens.v1/***
+#+ SLX-9169.Homo_sapiens.v2/***
+#+ SLX-9169.Homo_sapiens.v3/***
+#+ SLX-9169.Homo_sapiens.v4/***
+#+ SLX-9169.Homo_sapiens.v5/***
+#+ SLX-9169.Homo_sapiens.SE125.v1/***
+## FG smallRNA-Seq (GRCh37)
++ SLX-9176.Homo_sapiens.v1/***
++ SLX-9176.Homo_sapiens.v2/***
++ SLX-9791.Homo_sapiens.v1/***
++ SLX-9791.Homo_sapiens.v2/***
++ SLX-9794.Homo_sapiens.v1/***
++ SLX-9794.Homo_sapiens.v2/***
+## JD-SE50
+#+ SLX-9796.Homo_sapiens.v1/***
+#+ SLX-9788.Homo_sapiens.v1/***
+#+ SLX-9792.Homo_sapiens.SE50.v1/***
+## JD-SE125 (obsolete): these are merged later
+#+ SLX-10405.Homo_sapiens.v1/***
+#+ SLX-10406.Homo_sapiens.v1/***
+#+ SLX-10407.Homo_sapiens.v1/***
+#+ SLX-10408.Homo_sapiens.v1/***
+## IA-SE50-total-RNA
+#+ SLX-10297.Homo_sapiens.v1/***
+- *
