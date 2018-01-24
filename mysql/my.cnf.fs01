@@ -1,0 +1,274 @@
+# Example MySQL config file for very large systems.
+#
+# This is for a large system with memory of 1G-2G where the system runs mainly
+# MySQL.
+#
+# You can copy this file to
+# /etc/my.cnf to set global options,
+# mysql-data-dir/my.cnf to set server-specific options (in this
+# installation this directory is /var/lib/mysql) or
+# ~/.my.cnf to set user-specific options.
+#
+# In this file, you can use all long options that a program supports.
+# If you want to know which options a program supports, run the program
+# with the "--help" option.
+
+# The following options will be passed to all MySQL clients
+[client]
+#password	= your_password
+port		    = 3306
+socket		    = /var/lib/mysql/mysql.sock
+#loose-local-infile  = 1 # by Semin
+# Here follows entries for some specific programs
+
+# The MySQL server
+[mysqld]
+port		= 3306
+socket		= /var/lib/mysql/mysql.sock
+old_passwords=1
+datadir		= /data/Serve/mysql
+character-set-server            = utf8
+skip-locking
+key_buffer = 7G # increased by Sung in 10/Oct/2011
+max_allowed_packet = 1024M
+table_cache = 2048			#by Sung 
+sort_buffer_size = 8M
+
+#wait_timeout=600 # to kill 'sleep' process taking more than 600 sec 
+join_buffer_size = 5M		    	#by Sung
+log-queries-not-using-indexes = 1 	#by Sung
+open_files_limit = 2268			#by Sung
+
+max_connections=500
+########################################################################
+###############		MyISAM Specific options		################
+########################################################################
+# Size of the buffer used for doing full table scans of MyISAM tables.
+# Allocated per thread, if a full scan is needed.
+read_buffer_size = 2M
+
+# When reading rows in sorted order after a sort, the rows are read
+# through this buffer to avoid disk seeks. You can improve ORDER BY
+# performance a lot, if set this to a high value.
+# Allocated per thread, when needed.
+read_rnd_buffer_size = 16M
+
+# MyISAM uses special tree-like cache to make bulk inserts (that is,
+# INSERT ... SELECT, INSERT ... VALUES (...), (...), ..., and LOAD DATA
+# INFILE) faster. This variable limits the size of the cache tree in
+# bytes per thread. Setting it to 0 will disable this optimisation.  Do
+# not set it larger than "key_buffer_size" for optimal performance.
+# This buffer is allocated when a bulk insert is detected.
+bulk_insert_buffer_size = 64M
+
+# This buffer is allocated when MySQL needs to rebuild the index in
+# REPAIR, OPTIMIZE, ALTER table statements as well as in LOAD DATA INFILE
+# into an empty table. It is allocated per thread so be careful with
+# large settings.
+myisam_sort_buffer_size = 128M
+
+# The maximum size of the temporary file MySQL is allowed to use while
+# recreating the index (during REPAIR, ALTER TABLE or LOAD DATA INFILE.
+# If the file-size would be bigger than this, the index will be created
+# through the key cache (which is slower).
+# by Sung (27/Apr/2011)
+myisam_max_sort_file_size = 200G
+
+# If the temporary file used for fast index creation would be bigger
+# than using the key cache by the amount specified here, then prefer the
+# key cache method.  This is mainly used to force long character keys in
+# large tables to use the slower key cache method to create the index.
+# by Sung (27/Apr/2011)
+myisam_max_extra_sort_file_size = 100G
+
+# If a table has more than one index, MyISAM can use more than one
+# thread to repair them by sorting in parallel. This makes sense if you
+# have multiple CPUs and plenty of memory.
+myisam_repair_threads = 1
+
+# Automatically check and repair not properly closed MyISAM tables.
+myisam_recover
+
+
+# How many threads we should keep in a cache for reuse. When a client
+# disconnects, the client's threads are put in the cache if there aren't
+# more than thread_cache_size threads from before.  This greatly reduces
+# the amount of thread creations needed if you have a lot of new
+# connections. (Normally this doesn't give a notable performance
+# improvement if you have a good thread implementation.)
+thread_cache_size = 8
+
+# Query cache is used to cache SELECT results and later return them
+# without actual executing the same query once again. Having the query
+# cache enabled may result in significant speed improvements, if your
+# have a lot of identical queries and rarely changing tables. See the
+# "Qcache_lowmem_prunes" status variable to check if the current value
+# is high enough for your load.
+# Note: In case your tables change very often or if your queries are
+# textually different every time, the query cache may result in a
+# slowdown instead of a performance improvement.
+query_cache_size = 3G 
+
+# Try number of CPU's*2 for thread_concurrency
+thread_concurrency = 16 
+
+# Don't listen on a TCP/IP port at all. This can be a security enhancement,
+# if all processes that need to connect to mysqld run on the same host.
+# All interaction with mysqld must be made via Unix sockets or named pipes.
+# Note that using this option without enabling named pipes on Windows
+# (via the "enable-named-pipe" option) will render mysqld useless!
+# 
+#skip-networking
+
+# Only cache result sets that are smaller than this limit. This is to
+# protect the query cache of a very large result set overwriting all
+# other query results.
+query_cache_limit = 100M
+
+# Minimum word length to be indexed by the full text search index.
+# You might wish to decrease it if you need to search for shorter words.
+# Note that you need to rebuild your FULLTEXT index, after you have
+# modified this value.
+ft_min_word_len = 4
+
+# If your system supports the memlock() function call, you might want to
+# enable this option while running MySQL to keep it locked in memory and
+# to avoid potential swapping out in case of high memory pressure. Good
+# for performance.
+memlock
+
+# Table type which is used by default when creating new tables, if not
+# specified differently during the CREATE TABLE statement.
+default_table_type = MYISAM
+
+# log queires taking more than 120 sec by sung
+long_query_time= 120 
+log-slow-queries=/data/Store/Log/mysql/log-slow-queries.log
+#
+max_heap_table_size =1G 
+tmp_table_size = 3G
+
+# Replication Master Server (default)
+# binary logging is required for replication
+
+# Enable binary logging. This is required for acting as a MASTER in a
+# replication configuration. You also need the binary log if you need
+# the ability to do point in time recovery from your latest backup.
+#log-bin=mysql-bin
+
+# required unique id between 1 and 2^32 - 1
+# defaults to 1 if master-host is not set
+# but will not function as a master if omitted
+#server-id	= 1
+
+# Replication Slave (comment out master section to use this)
+#
+# To configure this host as a replication slave, you can choose between
+# two methods :
+#
+# 1) Use the CHANGE MASTER TO command (fully described in our manual) -
+#    the syntax is:
+#
+#    CHANGE MASTER TO MASTER_HOST=<host>, MASTER_PORT=<port>,
+#    MASTER_USER=<user>, MASTER_PASSWORD=<password> ;
+#
+#    where you replace <host>, <user>, <password> by quoted strings and
+#    <port> by the master's port number (3306 by default).
+#
+#    Example:
+#
+#    CHANGE MASTER TO MASTER_HOST='125.564.12.1', MASTER_PORT=3306,
+#    MASTER_USER='joe', MASTER_PASSWORD='secret';
+#
+# OR
+#
+# 2) Set the variables below. However, in case you choose this method, then
+#    start replication for the first time (even unsuccessfully, for example
+#    if you mistyped the password in master-password and the slave fails to
+#    connect), the slave will create a master.info file, and any later
+#    change in this file to the variables' values below will be ignored and
+#    overridden by the content of the master.info file, unless you shutdown
+#    the slave server, delete master.info and restart the slaver server.
+#    For that reason, you may want to leave the lines below untouched
+#    (commented) and instead use CHANGE MASTER TO (see above)
+#
+# required unique id between 2 and 2^32 - 1
+# (and different from the master)
+# defaults to 2 if master-host is set
+# but will not function as a slave if omitted
+#server-id       = 2
+#
+# The replication master for this slave - required
+#master-host     =   <hostname>
+#
+# The username the slave will use for authentication when connecting
+# to the master - required
+#master-user     =   <username>
+#
+# The password the slave will authenticate with when connecting to
+# the master - required
+#master-password =   <password>
+#
+# The port the master is listening on.
+# optional - defaults to 3306
+#master-port     =  <port>
+#
+# binary logging - not required for slaves, but recommended
+#log-bin=mysql-bin
+
+# Point the following paths to different dedicated disks
+tmpdir		= /data/Store/Log/mysql
+#log-update 	= /path-to-dedicated-directory/hostname
+
+# Uncomment the following if you are using BDB tables
+#bdb_cache_size = 384M
+#bdb_max_lock = 100000
+
+skip-innodb
+# Uncomment the following if you are using InnoDB tables
+#innodb_data_home_dir = /home/mysql/
+#innodb_data_file_path = ibdata1:2000M;ibdata2:10M:autoextend
+#innodb_log_group_home_dir = /var/lib/mysql/
+#innodb_log_arch_dir = /var/lib/mysql/
+# You can set .._buffer_pool_size up to 50 - 80 %
+# of RAM but beware of setting memory usage too high
+#innodb_buffer_pool_size = 384M
+#innodb_additional_mem_pool_size = 20M
+# Set .._log_file_size to 25 % of buffer pool size
+#innodb_log_file_size = 100M
+#innodb_log_buffer_size = 8M
+#innodb_flush_log_at_trx_commit = 1
+#innodb_lock_wait_timeout = 50
+
+# The safe_mysqld script
+[safe_mysqld]
+log-error=/var/lib/mysql/mysqld.log
+
+#by sung
+group_concat_max_len= 100M
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+character-sets-dir=utf8
+default-character-set=utf8
+
+[mysql]
+no-auto-rehash
+# Remove the next comment character if you are not familiar with SQL
+#safe-updates
+
+[isamchk]
+#key_buffer = 4G #use global
+sort_buffer_size = 512M
+read_buffer = 8M
+write_buffer = 8M
+
+[myisamchk]
+#key_buffer = 2G  #use global
+sort_buffer_size = 512M
+read_buffer = 8M
+write_buffer = 8M
+
+[mysqlhotcopy]
+interactive-timeout
