@@ -1,0 +1,23 @@
+# By Sung (23/Oct/2014)
+# use the hash sign to prefix a comment
+# +---------------- minute (0 - 59)
+# |  +------------- hour (0 - 23)
+# |  |  +---------- day of month (1 - 31)
+# |  |  |  +------- month (1 - 12)
+# |  |  |  |  +---- day of week (0 - 7) (Sunday=0 or 7)
+# |  |  |  |  |
+# *  *  *  *  *  command to be executed
+PATH=$HOME/Install/CPAT/usr/local/Cluster-Apps/python/2.7.5/bin:$HOME/Install/bedops_linux_x86_64-v2.4.15/bin:$HOME/Install/bamUtil/bin:$HOME/Install/userApps/bin:$HOME/Install/sratoolkit/bin:$HOME/Install/bwa:$HOME/Install/stringtie:$HOME/Install/miRanda/bin:$HOME/Install/randfold-2.0:$HOME/Install/ViennaRNA/bin:$HOME/Install/bowtie:$HOME/Install/mirdeep2_0_0_7:$HOME/Install/STAR_2.4.2a/bin/Linux_x86_64_static:$HOME/Install/cutadapt-1.8.1/bin:$HOME/Install/trim_galore_v0.4.0:$HOME/Install/fastqc_v0.11.4:$HOME/Install/htslib:$HOME/Install/bcftools:$HOME/Install/vcftools/bin:$HOME/Install/MACS2/bin:$HOME/Install/LiftOver:$HOME/Install/GCcount:$HOME/Install/FREEC:$HOME/Install/ngsutils/bin:$HOME/.local/bin:$HOME/bin:$HOME/Install/samtools:$HOME/Install/methpipe/bin:/usr/local/Cluster-Apps/java/jdk1.6.0_24/bin:/usr/local/Cluster-Apps/parallel/20131222/bin:/usr/local/Cluster-Apps/htop/sbin:/usr/local/Cluster-Apps/htop/bin:/usr/local/Cluster-Apps/R/3.1.1/bin:/usr/local/Cluster-Apps/perl/5.20.0/bin:/usr/local/Cluster-Apps/bedtools/2.20.1/bin:/usr/local/Cluster-Apps/cufflinks/2.2.1/bin:/usr/local/Cluster-Apps/tophat/2.0.12/bin:/usr/local/Cluster-Apps/bismark/0.12.3:/usr/local/Cluster-Apps/bowtie/2.2.3:/usr/local/Cluster-Apps/python/2.7.5/wx/2.9.5.0/bin:/usr/local/Cluster-Apps/python/2.7.5/bin:/usr/local/Cluster-Apps/vtk/5.6.1/bin:$HOME/Install/CPAT/usr/local/Cluster-Apps/python/2.7.5/bin:$HOME/Install/bedops_linux_x86_64-v2.4.15/bin:$HOME/Install/bamUtil/bin:$HOME/Install/userApps/bin:$HOME/Install/sratoolkit/bin:$HOME/Install/bwa:$HOME/Install/stringtie:$HOME/Install/miRanda/bin:$HOME/Install/randfold-2.0:$HOME/Install/ViennaRNA/bin:$HOME/Install/bowtie:$HOME/Install/mirdeep2_0_0_7:$HOME/Install/STAR_2.4.2a/bin/Linux_x86_64_static:$HOME/Install/cutadapt-1.8.1/bin:$HOME/Install/trim_galore_v0.4.0:$HOME/Install/fastqc_v0.11.4:$HOME/Install/htslib:$HOME/Install/bcftools:$HOME/Install/vcftools/bin:$HOME/Install/MACS2/bin:$HOME/Install/LiftOver:$HOME/Install/GCcount:$HOME/Install/FREEC:$HOME/Install/ngsutils/bin:$HOME/.local/bin:$HOME/bin:$HOME/Install/samtools:$HOME/Install/methpipe/bin:/usr/local/Cluster-Apps/intel/fce/12.1.10.319/bin:/usr/local/Cluster-Apps/intel/cce/12.1.10.319/bin:/usr/local/Cluster-Apps/global/bin:/usr/local/Cluster-Apps/intel/impi/4.1.3.045/bin64:/usr/local/Cluster-Apps/vgl/2.3.1/64/bin:/usr/local/Cluster-Apps/turbovnc/2.0.1/bin:/usr/local/Cluster-Apps/java/jdk1.8.0_45/bin:/usr/local/Cluster-Apps/slurm/sbin:/usr/local/Cluster-Apps/slurm/bin:/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/ibutils/bin:.:/opt/dell/srvadmin/bin:$HOME/bin
+
+##########
+# BACKUP #
+##########
+0 0 * * * crontab -l > $HOME/config/sung.peta4.crontab
+0 0 * * 0 /usr/local/software/slurm/current/bin/mybalance >> $HOME/Pipelines/mybalance.peta4.txt; /bin/date >> $HOME/Pipelines/mybalance.peta4.txt
+0 0 * * 0 /usr/bin/du -h --max-depth=2 $HOME/rds/rds-ssg29-obsgynae/POPS >> $HOME/Pipelines/du.rds.txt; /bin/date >> $HOME/Pipelines/du.rds.txt
+0 0 * * 0 /usr/bin/du -h --max-depth=2 $HOME/rcs/rcs-ssg29-obsgynae/POPS >> $HOME/rcs/rcs-ssg29-obsgynae/POPS/du.rcs.txt; /bin/date >> $HOME/rcs/rcs-ssg29-obsgynae/POPS/du.rcs.txt
+0 0 * * 0 /usr/bin/du -h --max-depth=1 $HOME/rcs/rcs-ssg29-obsgynae/POPS/data/fastq >> $HOME/rcs/rcs-ssg29-obsgynae/POPS/du.rcs.fastq.txt; /bin/date >> $HOME/rcs/rcs-ssg29-obsgynae/POPS/du.rcs.fastq.txt
+#0 0 * * 0 /usr/bin/du -h --max-depth=1 $HOME/rcs/rcs-ssg29-obsgynae/POPS/results >> $HOME/rcs/rcs-ssg29-obsgynae/POPS/du.rcs.results.txt; /bin/date >> $HOME/rcs/rcs-ssg29-obsgynae/POPS/du.rcs.results.txt
+#0 0 * * * rsync -a --update $HOME/rds/rds-ssg29-obsgynae/POPS/data/fastq $HOME/rcs/rcs-ssg29-obsgynae/POPS/data/
+##0 0 * * 0 rsync -a --update $HOME/rds/rds-ssg29-obsgynae/POPS/data $HOME/rcs/rcs-ssg29-obsgynae/POPS/
+#0 0 1,15 * * rsync -a --update $HOME/rds/rds-ssg29-obsgynae/POPS/results $HOME/rcs/rcs-ssg29-obsgynae/POPS/
