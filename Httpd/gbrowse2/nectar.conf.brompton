@@ -1,12 +1,10 @@
 [GENERAL]
 metadata =
-    -description             SAMUL: Systematic Annotations of Macromolecules
-    -maintainer              Sungsam Gong <sung@bio.cc>
-    -created                 2010-3-24
-    -modified                2013-11-05
-    -authority               TLB 
-    #-coordinates             http://www.dasregistry.org/coordsys/CS_DS109
-    #-coordinates_version     170
+    -description             NECTAR: a database of codon-centric missense variant annotations  
+    -maintainer              Sungsam Gong <sung.gong@yahoo.com>
+    -created                 2013-2-27
+    -modified                2013-10-30
+    -authority               Ensembl_73 + UniProt_2013_08 
     -source                  Protein 
     -testrange               P01906:1..255
     -species                 Homo sapiens
@@ -16,27 +14,26 @@ db_adaptor    = Bio::DB::GFF
 #db_args       = -adaptor memory
 #		 -gff     '/data/Store/Gbrowse'
 db_args       = -adaptor dbi::mysql 
-                -dsn dbi:mysql:GBROWSE;host=localhost
-                -user nectar
+                -dsn dbi:mysql:GBROWSE;host=fs01
+                -user nectar 
                 -passwd snrnsk
 search options = default +autocomplete
 
 das mapmaster = SELF
 
-aggregator = sstruct{HELIX,STRAND,TURN/Contig}
+aggregator = sstruct{HELIX,STRAND,TURN,COIL/Contig}
 
 # list of tracks to turn on by default
-default features = SStruct ScopDomain Binding Region SynSNP NonsynSNP SPVariants Site 
-#default features = PfamDomain ScopDomain SynSNP NonsynSNP SPVariants 
+default features = SStruct PfamDomain NonsynSNP HUMSAVAR COSMIC Binding Site 
 
 # The class of the objects used to establish the reference coordinates.
 reference class  = Contig
 
 # examples to show in the introduction
-examples = P04637 
+# Q8N3K9 (CMYA5_HUMAN): Cardiomyopathy-associated protein 5
+examples =  ENSP00000228841
 
-#
-#initial landmark = P04637 
+#initial landmark = ENSP00000228841
 
 # "automatic" classes to try when an unqualified identifier is given
 automatic classes = Contig
@@ -45,28 +42,21 @@ automatic classes = Contig
 # inside the <head></head> section
 head = 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
-	<meta name="description" content="SAMUL: Systematic Annotation of  Macromolecules" /> 
-	<meta name="keywords" content="samul, faceview, pdb, uniprot, snp, variation, esst" />
+	<meta name="description" content="NECTAR: NECTar is not ARchive" /> 
+	<meta name="keywords" content="nectar, cardiodb, disease, mutation, annotation, pdb, uniprot, snp, variation" />
 	<meta name="author" content="Sungsam Gong" />
-	<link rel="alternate" type="application/rss+xml" title="SAMUL news" href="http://samul.org/main/rss" />
-	<link rel="stylesheet" type="text/css" href="http://samul.org/main/static/css/gbrowse.css" />
+	<link rel="alternate" type="application/rss+xml" title="NECTAR news" href="/main/rss" />
+	<link rel="stylesheet" type="text/css" href="/main/static/css/gbrowse.css" />
 
 # at the top...
 header =
 	<div id="header">
-		<img src="http://samul.org/main/static/images/garland_logo.png" alt="the TLB group logo" /> 
-			<p class="dept">
-				Crystallography and Bioinformatics<br/>
-				Department of Biochemistry<br/>
-				University of Cambridge<br/>
-			</p>
-			<p class="title"><strong><a href="http://samul.org" title="Go to Home">SAMUL<a></strong></p>
+			<p class="title"><strong><a href="/main" title="Go to Home">NECTAR: a database of codon-centric missense variant annotations<a></strong></p>
 	</div>
 
 # a footer
-#footer = <hr><pre>$Id: golria.conf,v 1.8 2003/12/24 01:51:16 Sungsam Exp $</pre>
 footer = <div id="footer">
-		<p>&copy; 2010 <a href="http://sung.bio.cc">Sungsam Gong</a>, The Crystallography and Biocomputing Group, Department of Biochemistry, University of Cambridge</p>
+		<p>Cardiovascular Genetics Group, NIHR Biomedical Research Unit, Royal Brompton & Harefield NHS Trust and Imperial College</p>
 	</div><!-- end of footer -->
 
 
@@ -85,9 +75,15 @@ image widths  = 450 640 800 1024
 # default width of detailed view (pixels)
 default width = 800
 
-# Web site configuration info
+# Web site configuration info (http://gmod.org/wiki/GBrowse_2.0_HOWTO#Appearance_Settings)
 #stylesheet  = /gbrowse/gbrowse.css
 #tmpimages   = /gbrowse/tmp
+
+# autocomplete
+autocomplete = true
+
+# Region section
+region section = closed
 
 # max and default segment sizes for detailed view
 max segment     = 50000
@@ -116,6 +112,7 @@ upload_tracks section = off
 
 ########################
 # Default glyph settings
+# colour: http://gmod.org/wiki/Glyphs_and_Glyph_Options
 ########################
 
 [TRACK DEFAULTS]
@@ -128,8 +125,7 @@ label density = 25
 bump density  = 100
 # where to link to when user clicks in detailed view
 link          = AUTO
-#link	       =/cgi-bin/gbrowse/samul?name=$name;class=$class;ref=$ref;start=$start;end=$end
-#name=e.1.1.1;class=ENSP00000236260%3A38-463;ref=ENSP00000236260;start=38;end=463
+#link	       =/cgi-bin/gbrowse/nectar?name=$name;class=$class;ref=$ref;start=$start;end=$end
 
 
 ################## TRACK CONFIGURATION ####################
@@ -144,7 +140,7 @@ stranded     = 1
 bgcolor      = orange 
 height       = 10
 description  = 1
-link		 = http://www.expasy.org/cgi-bin/sprot-ft-details.pl?$ref@$name@$start@$end
+#link		 = http://www.expasy.org/cgi-bin/sprot-ft-details.pl?$ref@$name@$start@$end
 link_target  = _blank
 key          = Secondary Structure 
 das category = structural 
@@ -156,7 +152,7 @@ stranded     = 1
 bgcolor      = blue
 height       = 10
 description  = 1
-link         = http://www.sanger.ac.uk/cgi-bin/Pfam/getacc?$name
+link         = http://pfam.sanger.ac.uk/family/$name
 link_target  = _blank
 key          = Pfam Domain
 das category = structural 
@@ -180,9 +176,7 @@ glyph        = generic
 stranded     = 1
 bgcolor      = peachpuff 
 height       = 10 
-link		 = http://www.expasy.org/cgi-bin/sprot-ft-details.pl?$ref@$name@$start@$end
-#link		 = http://www.expasy.org/cgi-bin/sprot-ft-details.pl?Q12888@VARIANT@353@353
-#link		 = http://www.expasy.org/cgi-bin/ft_viewer.pl?$name
+#link		 = http://www.expasy.org/cgi-bin/sprot-ft-details.pl?$ref@$name@$start@$end
 link_target  = _blank
 key          = Binding sites 
 das category = structural 
@@ -194,11 +188,21 @@ stranded     = 1
 bgcolor      = gray 
 height       = 10 
 description  = 1
-link		 = http://www.expasy.org/cgi-bin/sprot-ft-details.pl?$ref@$name@$start@$end
-#link		 = http://www.expasy.org/cgi-bin/sprot-ft-details.pl?Q12888@VARIANT@353@353
-#link		 = http://www.expasy.org/cgi-bin/ft_viewer.pl?$name
+#link		 = http://www.expasy.org/cgi-bin/sprot-ft-details.pl?$ref@$name@$start@$end
 link_target  = _blank
 key          = Important Region 
+das category = structural 
+
+[Site]
+feature		 = site 
+glyph        = diamond 
+stranded     = 1
+bgcolor      = purple 
+height       = 10 
+description  = 1
+#link		 = http://www.expasy.org/cgi-bin/sprot-ft-details.pl?$ref@$name@$start@$end
+link_target  = _blank
+key          = Important Residues 
 das category = structural 
 
 [SynSNP]
@@ -207,7 +211,7 @@ glyph        = triangle
 height       = 10 
 bgcolor      = black
 description  = 1
-link         = http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?searchType=adhoc_search;type=rs;rs=$name
+link         = http://www.ensembl.org/Homo_sapiens/Search/Details?idx=Variation;species=Homo_sapiens;q=$name
 link_target  = _blank
 key          = Synonymous SNP
 das category = structural 
@@ -218,12 +222,12 @@ glyph        = triangle
 height       = 10 
 fgcolor      = red
 description  = 1
-link         = http://www.ncbi.nlm.nih.gov/projects/SNP/snp_ref.cgi?searchType=adhoc_search;type=rs;rs=$name
+link         = http://www.ensembl.org/Homo_sapiens/Search/Details?idx=Variation;species=Homo_sapiens;q=$name
 link_target  = _blank
 key          = Non-synonymous SNP
 das category = variation 
 
-[SPVariants]
+[HUMSAVAR]
 feature		 = sp_variant
 glyph        = triangle 
 height       = 10 
@@ -231,19 +235,47 @@ fgcolor      = green
 description  = 1
 link		 = http://www.expasy.org/cgi-bin/get-sprot-variant.pl?$name
 link_target  = _blank
-key          = SwissProt Variants
+key          = HUMSAVAR 
 das category = variation 
 
-[Site]
-feature		 = site 
-glyph        = diamond 
-stranded     = 1
-bgcolor      = purple 
+[COSMIC]
+feature		 = cosmic 
+glyph        = triangle 
 height       = 10 
+fgcolor      = violate 
 description  = 1
-link		 = http://www.expasy.org/cgi-bin/sprot-ft-details.pl?$ref@$name@$start@$end
-#link		 = http://www.expasy.org/cgi-bin/sprot-ft-details.pl?Q12888@VARIANT@353@353
-#link		 = http://www.expasy.org/cgi-bin/ft_viewer.pl?$name
+link		 = http://cancer.sanger.ac.uk/cosmic/mutation/overview?id=$name
 link_target  = _blank
-key          = Important Residues 
-das category = structural 
+key          = COSMIC 
+das category = variation 
+
+[HGMD]
+feature		 = hgmd 
+glyph        = triangle 
+height       = 10 
+fgcolor      = brown 
+description  = 1
+link		 = http://www.ensembl.org/Homo_sapiens/Search/Details?species=Homo_sapiens;idx=Variation;end=1;q=$name
+link_target  = _blank
+key          = HGMD 
+das category = variation 
+
+[ParaAnno]
+feature		 = para 
+glyph        = triangle 
+height       = 10 
+fgcolor      = maroon 
+description  = 1
+key          = Paralogue annotations 
+das category = miscellaneous 
+
+[ClinVar]
+feature		 = clinvar 
+glyph        = triangle 
+height       = 10 
+fgcolor      = crimson 
+description  = 1
+link		 = http://www.ncbi.nlm.nih.gov/clinvar?term=$name[varid]
+link_target  = _blank
+key          = ClinVar 
+das category = variation 

@@ -1,0 +1,186 @@
+# use the hash sign to prefix a comment
+# +---------------- minute (0 - 59)
+# |  +------------- hour (0 - 23)
+# |  |  +---------- day of month (1 - 31)
+# |  |  |  +------- month (1 - 12)
+# |  |  |  |  +---- day of week (0 - 7) (Sunday=0 or 7)
+# |  |  |  |  |
+# *  *  *  *  *  command to be executed
+#PERL
+PERL5LIB=/home/sung/perl5/lib/perl5/x86_64-linux-thread-multi:/home/sung/perl5/lib/perl5:/data/Develop/SAMUL/lib:/data/Develop/Gloria:/data/Install/Perl/bioperl-live:/data/Install/Perl/ensembl/modules:/data/Install/Perl/ensembl-variation/modules:/data/Install/Perl/ensembl-compara/modules:/share/apps/bioscope/lib/perl:/share/apps/solidexport/lib/perl:/share/apps/bioscope/lib/perl:/share/apps/solidexport/lib/perl:/home/sung/perl5/lib/perl5/x86_64-linux-thread-multi:/home/sung/perl5/lib/perl5:/data/Develop/SAMUL/lib:/data/Develop/Gloria:/data/Install/Perl/bioperl-live:/data/Install/Perl/ensembl/modules:/share/apps/bioscope/lib/perl:/share/apps/solidexport/lib/perl
+#ENSEMBL
+ENSEMBL_REGISTRY=/home/sung/.ensembl_api.conf
+#CARDIODB (also in /etc/profile.d/cardiodb.sh for normal users)
+CARDIODB_ROOT=/data/Develop/CardioDB
+CARDIODB=CARDIODB_DEVEL
+CALLERS=diBayes SmallIndels GATKs Samtools
+NECTAR_ROOT=/data/Develop/NECTAR
+NECTAR=NECTAR
+
+# PATH
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/java/default/bin:/share/apps/bioscope/bin:/opt/maui/bin:/opt/maui/sbin:/opt/torque/bin:/share/apps/solidexport/bin:/home/sung/perl5/bin:/data/Install/Exonerate/bin:/data/Install/Blast/bin:/data/Install/Baton/data:/data/Install/Baton/bin:/data/Install/joy/:/data/Install/fugue/:/usr/java/default/bin:/share/apps/bioscope/bin:/opt/maui/bin:/opt/maui/sbin:/opt/torque/bin:/share/apps/solidexport/bin:/usr/java/default/bin:/share/apps/bioscope/bin:/opt/maui/bin:/opt/maui/sbin:/opt/torque/bin:/share/apps/solidexport/bin:/home/sung/perl5/bin:/data/Install/Exonerate/bin:/data/Install/Blast/bin:/home/sung/Install/Baton/data:/home/sung/Install/Baton/bin:/home/sung/Install/joy/:/home/sung/Install/fugue/:/usr/lib64/qt-3.3/bin:/opt/bin:/opt/open-mpi/tcp-gnu41/bin:/usr/kerberos/bin:/usr/java/default/bin:/opt/intel/idbe/11.1/bin:/opt/intel/fce/11.1/bin:/opt/intel/cce/11.1/bin:/usr/lib64/ccache:/share/apps/bioscope/bin:/opt/maui/bin:/opt/maui/sbin:/opt/torque/bin:/share/apps/solidexport/bin:/usr/local/bin:/bin:/usr/bin:/opt/torque/bin:/opt/maui/bin:/opt/maui/sbin:/share/apps/solidexport/bin:/usr/NX/bin:/opt/real/RealPlayer:/opt/torque/bin:/opt/maui/bin:/opt/maui/sbin:/share/apps/solidexport/bin:/usr/NX/bin:/opt/real/RealPlayer:/home/sung/bin:/opt/torque/bin:/opt/maui/bin:/opt/maui/sbin:/share/apps/solidexport/bin:/usr/NX/bin:/opt/real/RealPlayer:/opt/torque/bin:/opt/maui/bin:/opt/maui/sbin:/share/apps/solidexport/bin:/usr/NX/bin:/opt/real/RealPlayer
+
+# PYTHONPATH
+#PYTHONPATH=/merlin/Install/openeye/python:/merlin/Libs
+
+# LD_LIBRARY_PATH
+#LD_LIBRARY_PATH=/usr/local/lib:/merlin/install/openeye/python
+
+##############
+# Disk Usage #
+##############
+0 12 * * 3 sh /data/Develop/CardioDB/bin/disk_usage.sh /data/Serve/mysql/CARDIODB_DEVEL
+0 12 * * 3 sh /data/Develop/CardioDB/bin/disk_usage.sh /data/Serve/mysql/ICC_MUTATIONS 
+0 12 * * 3 sh /data/Develop/CardioDB/bin/disk_usage.sh /data/results/MiSeq 
+10 12 * * 3 sh /data/Develop/CardioDB/bin/disk_usage.sh /data/results/5500xl 
+10 12 * * 3 sh /data/Develop/CardioDB/bin/disk_usage.sh /fs03/master/data/results/HiSeq
+
+##########
+# MIRROR #
+##########
+# 1. CSA
+#0 0 1 * * /data/Develop/Gloria/CSA/mirror_csa.pl
+# 2. HGNC
+#0 0 * * 1 /data/Develop/Gloria/HGNC/mirror_hgnc.pl
+# 3. SCOP
+#0 0 * * 2 /data/Develop/Gloria/SCOP/mirror_scop.pl
+# 4. PQS
+#0 3 * * 4 cd /data/Mirror/MSD/PQS; wget -m -nH --cut-dirs=4 ftp://ftp.ebi.ac.uk/pub/databases/msd/pqs/ -o /data/Develop/Gloria/wget_pqs.log -b
+# 5. MSD SIFTS
+#0 2 * * 0 /data/Develop/Gloria/SIFTS/mirror_msd_sifts.pl
+# 6. UNIPROT
+#0 2 29,13 * * /data/Develop/Gloria/UniProt/mirror_ebi_uniprot.pl
+# 7. PDB
+#0 0 * * 0 /data/Develop/Gloria/PDB/mirror_pdb.sh
+# 7.1. PDB uncompress (who's using uncompressed PDB files?)
+#0 0 * * 1 /data/Develop/Gloria/PDB/uncompress_and_rename_pdb_rem_atom_files.pl all
+# 8. Bioperl (every 1st) (http://www.ensembl.org/info/docs/api/api_cvs.html)
+0 0 1 * * cd /data/Install/Perl; rm -fr bioperl-live; git clone git://github.com/bioperl/bioperl-live.git; cd bioperl-live; git checkout bioperl-release-1-2-3
+# 9. COSMIC
+#0 0 * * 2 /data/Develop/Gloria/COSMIC/mirror_cosmic.pl
+#0 6 * * 2 perl /data/Develop/Gloria/COSMIC/parse_cosmic_and_dump_into_db.pl
+#0 9 * * 2 mysql COSMIC < /data/Develop/Gloria/SQL/COSMIC/CosmicLite.sql
+
+##########
+# BACKUP #
+##########
+# Database Schema backup
+0 0 * * * perl /data/Develop/CardioDB/bin/backup_schema.pl --db CARDIODB_DEVEL >/dev/null
+30 0 * * * mysqldump --no-data UNIPROT_DEVEL SwissVariants | sed 's/AUTO_INCREMENT=[0-9]*\b//' > /data/Develop/Gloria/Schema/UNIPROT/SwissVariants.schema.sql
+30 0 * * * mysqldump --no-data UNIPROT_DEVEL --ignore-table=UNIPROT.SwissVariants --ignore-table=UNIPROT.featureDef | sed 's/AUTO_INCREMENT=[0-9]*\b//' > /data/Develop/Gloria/Schema/UNIPROT/UNIPROT.schema.sql
+30 0 * * * mysqldump --no-data UNIPROT_DEVEL --ignore-table=UNIPROT_DEVEL.SwissVariants --ignore-table=UNIPROT_DEVEL.featureDef | sed 's/AUTO_INCREMENT=[0-9]*\b//' > /data/Develop/Gloria/Schema/UNIPROT/UNIPROT_DEVEL.schema.sql
+0 0 * * 0 mysqldump --no-data GLORIA CSA FuncRes ResAnno ResMap > /data/Store/GLORIA/GLORIA.schema.sql
+0 1 * * 0 mysqldump --no-data CARDIODB_DEVEL | sed 's/AUTO_INCREMENT=[0-9]*\b//' > /data/Develop/CardioDB/Schema.backup/CARDIODB_DEVEL.schema.weekly.sql
+0 1 * * 0 mysqldump --no-data NECTAR | sed 's/AUTO_INCREMENT=[0-9]*\b//' > /data/Develop/NECTAR/Schema.backup/NECTAR.schema.weekly.sql
+0 1 * * 0 mysqldump --no-data SAMUL | sed 's/AUTO_INCREMENT=[0-9]*\b//' > /data/Develop/SAMUL/Schema.backup/SAMUL.schema.weekly.sql
+
+# Dump configuration settings
+0 0 * * * mysqldump SAMUL config > /data/Store/SQL/SAMUL/config.sql.dump
+
+#NECTAR
+0 0 * * * mysqldump --opt UNIPROT featureDef | mysql NECTAR
+
+### Sequencing Instruments ###
+# Solid 5500XL (this would not be working as there's no connection) 
+#0 3 * * 0 sudo rsync -a --exclude '*/intermediate' --exclude '*/cache' --exclude '*/images' /sequencer/CMR000070/ /fs03/CMR000070
+0 1 * * 0 rsync -a --verbose /data/results/5500xl/reads /fs03/master/data/results/5500xl/
+
+# HiSeq
+0 1 * * 0 sudo rsync -a /data/results/HiSeq /fs03/master/data/results/
+# Remove HiSeq read files older than 30*1 days older
+#0 3 * * 0 sudo find /data/results/HiSeq/Reads -type f -atime +30 -print -exec rm {} \;
+
+# Web
+0 1 * * * sudo rsync -a --delete /web/cardiodb.org/ /fs03/cardiodb.org
+0 0 * * 0 sudo rsync -a --delete /data/Serve/Web /fs03/master/data/Serve/
+#DB
+0 3 * * 0 sudo rsync -a --delete /data/Serve/mysql /fs03/master/data/Serve/
+
+# Config
+0 0 * * 0 sudo rsync -a --delete /data/Config /fs03/master/data/
+
+# Develop
+30 0 * * 0 sudo rsync -a --delete /data/Develop /fs03/master/data/
+
+# FS01
+#0 6 * * 1,2,3,4,5 ssh fs01 /usr/bin/sudo /bin/bash /data/Config/mysql/rsync_cardiodb.sh
+
+# Remove solid image older than 30*4 days older (this job has been moved to the solid machine)
+#0 3 * * * sudo find /data/image s0464 -type f -atime +120 -print -exec rm {} \;
+# Remove 5500xl .xsq files older than 30*1 days older
+#0 3 * * 0 sudo find /data/results/5500xl/reads -type f -atime +30 -print -exec rm {} \;
+#0 3 * * 0 sudo find /data/results/5500xl/reads -name *xsq -type f -atime +30 -print -exec rm {} \;
+
+# Local backup
+# /data/Config /data/Develop /data/Live /data/results /data/Research /data/Serve
+#0 0 * * * rsync -a -e 'ssh' root@master:/data/* --exclude '/Download' --exclude '/Install' --exclude '/Learn' --exclude '/Mirror' --exclude '/pgdata' --exclude '/Run' --exclude '/Share' --exclude '/Store' --exclude '/tmp' /Genta/PSSC/
+
+###########
+# DEVELOP #
+###########
+#CARDIODB
+0 0 * * * mysql CARDIODB_DEVEL < /data/Develop/CardioDB/SQL/update_Samples.sql
+0 0 * * * mysql CARDIODB_DEVEL < /data/Develop/CardioDB/SQL/update_UnifiedCalls.sql
+0 0 * * * mysql CARDIODB_DEVEL < /data/Develop/CardioDB/SQL/update_2UniProts.sql
+0 0 * * * mysql CARDIODB_DEVEL < /data/Develop/CardioDB/SQL/update_2PDBs.sql
+#0 1 * * 6 sh /data/Develop/CardioDB/bin/update_Meta.sh
+#0 1 * * 7 sh /data/Develop/CardioDB/bin/update_Classified.sh
+#0 0 * * 7 sh /data/Develop/CardioDB/bin/make_ICCRefs.sh
+#10 0 * * 7 sh /data/Develop/CardioDB/bin/make_CleanedHGMDs.sh
+20 0 * * 7 sh /data/Develop/CardioDB/bin/make_PatPatients.sh
+20 0 * * 7 sh /data/Develop/CardioDB/bin/make_GeneticsRecords.sh
+#LEICA_DNA
+0 0 * * * sh /data/Develop/CardioDB/bin/update_leica_dna.sh > /dev/null 2> /dev/null
+
+
+#UNIPROT
+#0 0 1 * * /data/Develop/Gloria/UniProt/parse_uniprot_xml_and_dump_into_db_using_infile.pl --type all --tax_id 9606 
+0 0 4,17 * * /data/Develop/Gloria/UniProt/parse_HUMSAVAR_and_dump_into_db_v2.pl update 
+
+#PDB2UniProt
+0 0 15 * * mysql GLORIA <  /data/Develop/Gloria/SQL/GLORIA/PDB2UniProt.sql
+
+#SCOPMap
+#0 0 1 * * /data/Develop/Gloria/SCOP/make_SCOPMap.pl fs01 all
+
+#SAMUL (Metaxxx)
+# populates: MetaSNP, MetaPDB, MetaAnno
+#0 1 * * 6 mysql SAMUL <  /data/Develop/SAMUL/SQL/MetaSNP.sql
+#0 4 * * 6 perl /data/Develop/SAMUL/bin/MetaPDB.pl fs01 make dump
+#MetaAnno depends on ResMap, FuncRes and UniProt
+#0 6 * * 6 mysql SAMUL <  /data/Develop/SAMUL/SQL/MetaAnno.sql
+
+#Ensembl
+#The script below updates Gbrowse 
+# populates: SNP2ENSX SNP2UniProt SNP2PDB
+#0 0 * * 6 /data/Develop/Gloria/Ensembl/get_ensembl_version.pl 2> /dev/null
+
+#FuncResTLB (BIPA, CREDO and PICCOLO from Cambridge)
+#0 0 15 * * rsync -a -e 'ssh' ssgong@merlin.bioc.cam.ac.uk:/merlin/Live/ssgong/FuncResTLB.txt /data/Store/GLORIA/
+#0 5 15 * * mysql GLORIA < /data/Develop/Gloria/Schema/GLORIA/FuncResTLB.schema.sql
+#1 5 15 * * mysqlimport  --local --delete --lock-tables --replace --verbose GLORIA /data/Store/GLORIA/FuncResTLB.txt
+#mysql GLORIA -e "load data local infile '/data/Store/GLORIA/FuncResTLB.txt' replace into table FuncResTLB; Show warnings"
+
+#FuncRes
+#0 0 * * 6 /data/Develop/Gloria/FuncRes/update_funcres.pl all
+
+#ResAnno (JOY results 'ResAnno.txt' is from merlin)
+#0 0 * * 0 rsync -a -e 'ssh' ssgong@merlin.bioc.cam.ac.uk:/merlin/Store/GLORIA/ResAnno.txt /data/Store/GLORIA/
+#0 4 * * 0 /data/Develop/Gloria/ResAnno/make_ResAnno.pl fs01 dump
+
+#ModRes
+#0 6 * * 1 /data/Develop/Gloria/ModRes/make_ModRes.pl all
+
+#Gbrowse (remove old images and session files) by Sung (sung@bio.cc)
+#0 3 * * * sudo find /data/tmp/gbrowse2 -type f -atime +30 -exec rm {} \;
+#0 0 1 * * perl /data/Develop/Gloria/Gbrowse/load_gff_into_db.pl --mode create
+
+# MSD SIFTS (replaced by ResMap)
+#0 2 29 * * /data/Develop/Gloria/SIFTS/parse_sift_xml_files_and_email_at_spunky.pl all
+#deprecated
+#0 4 * * 0 /data/Develop/Gloria/SIFTS/parse_sift_txt_files_and_dump_into_db.pl all 
+
+# UCSC (deprecated)
+#replace by 'parse_uniprot_xml_and_dump_into_db.pl'
+#0 2 5,15 * * /data/Develop/Gloria/UCSC/mirror_ucsc_uniprot_db.pl
+#0 2 6,16 * * /data/Develop/Gloria/UCSC/dump_ucsc_uniprot_into_database.pl update
