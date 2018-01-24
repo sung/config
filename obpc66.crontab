@@ -1,0 +1,146 @@
+# Edit this file to introduce tasks to be run by cron.
+# 
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+# 
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').# 
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+# 
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+# 
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+
+# By Sung (23/Oct/2014)
+# use the hash sign to prefix a comment
+# +---------------- minute (0 - 59)
+# |  +------------- hour (0 - 23)
+# |  |  +---------- day of month (1 - 31)
+# |  |  |  +------- month (1 - 12)
+# |  |  |  |  +---- day of week (0 - 7) (Sunday=0 or 7)
+# |  |  |  |  |
+# *  *  *  *  *  command to be executed
+
+########################
+### Save this Crontab ##
+########################
+0 0 * * * crontab -l > /data/Config/obpc66.crontab
+#######################
+### UIS HPC to Local ##
+#######################
+0 4 * * 0 rsync -a --delete hpc:~/Pipelines $HOME/
+0 5 * * * rsync -a --delete hpc:~/bin $HOME/
+0 6 * * * rsync -a --delete hpc:~/config $HOME/
+0 6 * * * rsync -a --update hpc:~/Install $HOME/
+#############################
+### UIS to NAS1 (Synology) ##
+#############################
+#0 0 1,15 * * rsync -a --update hpc:/scratch/ssg29/results /remote/NAS1/
+0 0 * * 0 rsync -a --update hpc:/scratch/ssg29/data /remote/NAS1/
+0 0 * * * rsync -a --delete hpc:/home/ssg29/Pipelines /remote/NAS1/
+10 0 * * * rsync -a --delete hpc:/home/ssg29/bin /remote/NAS1/
+20 0 * * * rsync -a --delete hpc:/home/ssg29/config /remote/NAS1/
+30 0 * * 0 rsync -a --delete hpc:/home/ssg29/Install /remote/NAS1/
+0 2 * * 0 du -h --max-depth=2 /remote/NAS1 >> /remote/NAS1/du.txt; /bin/date >> /remote/NAS1/du.txt
+##########################
+### UIS to NAS2 (Steve) ##
+##########################
+0 0 * * 2 rsync -a --update /remote/NAS1/data /remote/NAS2/
+30 0 * * * rsync -a --delete hpc:/home/ssg29/Pipelines /remote/NAS2/
+40 0 * * * rsync -a --delete hpc:/home/ssg29/bin /remote/NAS2/
+50 0 * * * rsync -a --delete hpc:/home/ssg29/config /remote/NAS2/
+0 3 * * 0 du -h --max-depth=2 /remote/NAS2 >> /remote/NAS2/du.txt; /bin/date >> /remote/NAS2/du.txt
+###########################################
+## NON CORE (e.g. NON-POPS) DATA TO NAS2 ##
+###########################################
+# 1. NON.POPS rna-seq data only
+#rsync -avz --include-from=$HOME/NON.CORE.rna.seq.result.list /remote/NAS1/results/ /remote/NAS2/results
+# 2. NON.CORE methyl-seq data only
+#rsync -avz --include-from=$HOME/NON.CORE.WGBS.result.list /remote/NAS1/results/ /remote/NAS2/results
+####################################
+## RSYNC CLEAN UP & COMPRESS DATA ##
+####################################
+# WGoxBS
+# rsync -av --delete /scratch/obsgynae/POPS/results/SLX-8074.SLX-8080.v1 /remote/NAS1/results/
+# rsync -av --delete /scratch/obsgynae/POPS/results/SLX-8075.SLX-8077.SLX-8081.v1 /remote/NAS1/results/
+
+############################
+## Marcus Placenta FG & JD #
+############################
+## SE50 & GRCh37
+##rsync -av --include='*/' --include='*/unmapped.bam' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.v4/TopHat /media/Sung_ObsGynae/Marcus/SLX-9168.Homo_sapiens.v4/
+#
+## FG.dehuman.Oct.2015 (GRCh37)
+##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.SE125.v1/TopHat /media/Sung_ObsGynae/Marcus/SLX-9168.Homo_sapiens.SE125.v1/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9169.Homo_sapiens.SE125.v1/TopHat /media/Sung_ObsGynae/Marcus/SLX-9169.Homo_sapiens.SE125.v1/
+#
+## FG.dehuman.Nov.2015 (local alignment mode of bowtie2)
+##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie2.local.fq.gz' --exclude='*' --prune-empty-dirs hpc:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/Sung_ObsGynae/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie2.local.fq.gz' --exclude='*' --prune-empty-dirs hpc:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/Sung_ObsGynae/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
+#
+## FG.dehuman.Dec.2015 (local alignment mode of bowtie2)
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
+#
+## FG.dehuman.Dec.2015 (end-to-end alignment mode of bowtie2)
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
+#
+## FG.dehuman.May.2016 (local alignment)
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.may2016.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.may2016.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
+#
+## FG.dehuman.May.2016 (end-to-end alignment)
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.may2016.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.may2016.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
+#
+## JD.dehuman.May.2016 (end-to-end & local)
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10281.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10402.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-9792.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10284.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10285.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10283.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10287.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+
+###########
+## Sofia ##
+###########
+## unmapped.fq.gz to Sofia (JD*7, FG*2)
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/dehuman.unfiltered.list.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10287.Homo_sapiens.v1 /media/Sung_ObsGynae/Sofia/Unfiltered/
+## FG.dehuman.May.2016 to Sofia (x2)
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-9169.Homo_sapiens.SE125.v2 /media/Sung_ObsGynae/Sofia/Filtered/
+## rsync -av /remote/NAS1/data/fastq/SLX-9168.SE125/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/fastq/SLX-9168.SE125/
+## rsync -av /remote/NAS1/data/fastq/SLX-9169.SE125/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/fastq/SLX-9169.SE125/
+
+## rsync -av /remote/NAS1/data/fastq/SLX-10281/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/fastq/SLX-10281/
+## rsync -av /remote/NAS1/data/fastq/SLX-10402/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/fastq/SLX-10402/
+## rsync -av /remote/NAS1/data/fastq/SLX-9792/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/fastq/SLX-9792/
+## rsync -av /remote/NAS1/data/fastq/SLX-10284/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/fastq/SLX-10284/
+## rsync -av /remote/NAS1/data/fastq/SLX-10285/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/fastq/SLX-10285/
+## rsync -av /remote/NAS1/data/fastq/SLX-10283/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/fastq/SLX-10283/
+## rsync -av /remote/NAS1/data/fastq/SLX-10287/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/fastq/SLX-10287/
+
+###########################
+## Marcus Plasma FG 2017 ##
+###########################
+#rsync -av --delete hpc:~/data/fastq/SLX-9342.PE75/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/Plasma/fastq/SLX-9342.PE75/
+#rsync -av --delete hpc:~/data/fastq/SLX-9345.PE75/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/Plasma/fastq/SLX-9345.PE75/
+
+############################
+## Marcus Plasma SML 2017 ##
+############################
+#rsync -av --delete hpc:~/data/fastq/SLX-SML1/*fq.gz --exclude '*lostreads.fq.gz' /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Unfiltered/
+#rsync -av --update --include='*/' --include='*/unmapped/unmapped.prep.bt2.singletons.merged.fq.gz' --exclude='*' --prune-empty-dirs hpc:~/results/SLX-SML1.Homo_sapiens.v4/TopHat /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Filtered/
+#rsync -av --update --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.1.gz' --exclude='*' --prune-empty-dirs hpc:~/results/SLX-SML1.Homo_sapiens.v4/TopHat /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Filtered/
+#rsync -av --update --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.2.gz' --exclude='*' --prune-empty-dirs hpc:~/results/SLX-SML1.Homo_sapiens.v4/TopHat /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Filtered/
