@@ -1,0 +1,61 @@
+use strict;
+use Bio::EnsEMBL::Utils::ConfigRegistry;
+use Bio::EnsEMBL::DBSQL::DBAdaptor;
+use Bio::EnsEMBL::Variation::DBSQL::DBAdaptor;
+use Bio::EnsEMBL::Compara::DBSQL::DBAdaptor;
+
+=remote
+new Bio::EnsEMBL::DBSQL::DBAdaptor(
+	-host    => 'ensembldb.ensembl.org',
+	-user    => 'anonymous',
+	-port    => 5306,
+	-species => 'Homo sapiens',
+	-group   => 'core',
+	-dbname  => 'homo_sapiens_core_60_37f'
+);
+
+new Bio::EnsEMBL::Variation::DBSQL::DBAdaptor(
+	-host    => 'ensembldb.ensembl.org',
+	-user    => 'anonymous',
+	-port    => 5306,
+	-species => 'Homo sapiens',
+	-group   => 'variation',
+	-dbname  => 'homo_sapiens_variation_60_37f'
+);
+=cut
+
+new Bio::EnsEMBL::DBSQL::DBAdaptor(
+	-host    => 'fs01',
+	-user    => 'zenki',
+	-pass => 'cost4ric4n',
+	-dbname  => 'ENSEMBLCORE',
+	-species => 'Homo sapiens',
+	-group   => 'core',
+);
+
+new Bio::EnsEMBL::Variation::DBSQL::DBAdaptor(
+	-host    => 'fs01',
+	-user    => 'zenki',
+	-pass => 'cost4ric4n',
+	-dbname  => 'ENSEMBLVARIATION',
+	-species => 'Homo sapiens',
+	-group   => 'variation',
+);
+
+new Bio::EnsEMBL::Compara::DBSQL::DBAdaptor(
+	-host    => 'fs01',
+	-user    => 'zenki',
+	-pass => 'cost4ric4n',
+	-dbname  => 'ENSEMBLCOMPARA',
+	-species => 'Multi',
+	-group   => 'compara',
+);
+
+
+my @aliases = ( 'H_Sapiens', 'human', 'Human' );
+Bio::EnsEMBL::Utils::ConfigRegistry->add_alias(
+	-species => 'Homo sapiens',
+	-alias   => \@aliases
+);
+
+1;
