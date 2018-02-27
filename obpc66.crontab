@@ -31,17 +31,18 @@
 # |  |  |  |  |
 # *  *  *  *  *  command to be executed
 
-########################
-### Save this Crontab ##
-########################
-0 0 * * * crontab -l > /data/Config/obpc66.crontab
+##############################
+### Save configuration files #
+##############################
+0 0 * * * crontab -l > $HOME/config/obpc66.crontab
+0 0 * * * cp -a /etc/fstab $HOME/config/obpc66.fstab
 #######################
 ### UIS HPC to Local ##
 #######################
-0 4 * * 0 rsync -a --delete hpc:~/Pipelines $HOME/
-0 5 * * * rsync -a --delete hpc:~/bin $HOME/
-0 6 * * * rsync -a --delete hpc:~/config $HOME/
-0 6 * * * rsync -a --update hpc:~/Install $HOME/
+0 4 * * 0 rsync -a --delete hpc:$HOME/Pipelines $HOME/
+0 5 * * * rsync -a --delete hpc:$HOME/bin $HOME/
+0 6 * * * rsync -a --update hpc:$HOME/config $HOME/
+0 6 * * * rsync -a --update hpc:$hOME/Install $HOME/
 #############################
 ### UIS to NAS1 (Synology) ##
 #############################

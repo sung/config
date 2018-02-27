@@ -27,6 +27,11 @@ svm-nas-02.medschl.cam.ac.uk:/nfs_home	/home/MINTS	nfs	_netdev,nfsvers=3,default
 //131.111.90.54/Sequencing\040data	/remote/NAS2	cifs	uid=11152,gid=10033,credentials=/etc/auto.smb.credentials,iocharset=utf8,sec=ntlm,vers=2.0	0	0
 #//131.111.90.54/Sequencing\040data /remote/NAS2 cifs credentials=/etc/auto.smb.credentials,iocharset=utf8,sec=ntlm,nosetuids,noperm 0 0 
 
+########################################
+## Research File Share (RFS) from UIS ##
+########################################
+//rfs.uis.private.cam.ac.uk/rfs-ssg29-obsgynae	/remote/rfs-ssg29-obsgynae	cifs	uid=11152,gid=10033,credentials=/etc/auto.smb.credentials.rfs,iocharset=utf8,sec=ntlm	0	0
+
 ######################
 ## Synology NAS BOX ##
 ######################
