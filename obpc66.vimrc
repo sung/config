@@ -21,6 +21,7 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'bioSyntax/bioSyntax-vim'
 " Plugin 'jalvesaq/R-Vim-runtime'
 " Plugin 'vim-scripts/Vim-R-plugin'
 " git repos on your local machine (i.e. when working on your own plugin) 
@@ -38,17 +39,17 @@ filetype plugin indent on    " required
 "endif
 "set termguicolors " DOES NOT WORK WITH SCREEN
 let g:gruvbox_italic  =1
-"colorscheme gruvbox
+colorscheme gruvbox
 "let g:solarized_termcolors=256
 "colorscheme solarized 
-colorscheme jellybeans 
+"colorscheme jellybeans 
 "colorscheme seoul256
 set bg=dark
 
 """"""""""""
 "" italic ""
 """"""""""""
-"https://hobo.house/2017/07/17/using-italics-with-vim-in-your-terminal/
+"https://hobo.house/2017/07/17/using-italics-with-vim-in-your-terminal/ "does not work with 'screen'"
 highlight Comment cterm=italic
 
 """""""""""

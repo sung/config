@@ -39,27 +39,27 @@
 #######################
 ### UIS HPC to Local ##
 #######################
-0 4 * * 0 rsync -a --delete hpc:$HOME/Pipelines $HOME/
-0 5 * * * rsync -a --delete hpc:$HOME/bin $HOME/
-0 6 * * * rsync -a --update hpc:$HOME/config $HOME/
-0 6 * * * rsync -a --update hpc:$hOME/Install $HOME/
+0 4 * * 0 rsync -a --delete peta4:$HOME/Pipelines $HOME/
+0 5 * * * rsync -a --delete peta4:$HOME/bin $HOME/
+0 6 * * * rsync -a --update peta4:$HOME/config $HOME/
+0 6 * * * rsync -a --update peta4:$hOME/Install $HOME/
 #############################
 ### UIS to NAS1 (Synology) ##
 #############################
-#0 0 1,15 * * rsync -a --update hpc:/scratch/ssg29/results /remote/NAS1/
-0 0 * * 0 rsync -a --update hpc:/scratch/ssg29/data /remote/NAS1/
-0 0 * * * rsync -a --delete hpc:/home/ssg29/Pipelines /remote/NAS1/
-10 0 * * * rsync -a --delete hpc:/home/ssg29/bin /remote/NAS1/
-20 0 * * * rsync -a --delete hpc:/home/ssg29/config /remote/NAS1/
-30 0 * * 0 rsync -a --delete hpc:/home/ssg29/Install /remote/NAS1/
+#0 0 1,15 * * rsync -a --update peta4:/home/ssg29/results /remote/NAS1/
+0 0 * * 0 rsync -a --update peta4:/home/ssg29/data /remote/NAS1/
+0 0 * * * rsync -a --delete peta4:/home/ssg29/Pipelines /remote/NAS1/
+10 0 * * * rsync -a --delete peta4:/home/ssg29/bin /remote/NAS1/
+20 0 * * * rsync -a --delete peta4:/home/ssg29/config /remote/NAS1/
+30 0 * * 0 rsync -a --delete peta4:/home/ssg29/Install /remote/NAS1/
 0 2 * * 0 du -h --max-depth=2 /remote/NAS1 >> /remote/NAS1/du.txt; /bin/date >> /remote/NAS1/du.txt
 ##########################
 ### UIS to NAS2 (Steve) ##
 ##########################
 0 0 * * 2 rsync -a --update /remote/NAS1/data /remote/NAS2/
-30 0 * * * rsync -a --delete hpc:/home/ssg29/Pipelines /remote/NAS2/
-40 0 * * * rsync -a --delete hpc:/home/ssg29/bin /remote/NAS2/
-50 0 * * * rsync -a --delete hpc:/home/ssg29/config /remote/NAS2/
+30 0 * * * rsync -a --delete peta4:/home/ssg29/Pipelines /remote/NAS2/
+40 0 * * * rsync -a --delete peta4:/home/ssg29/bin /remote/NAS2/
+50 0 * * * rsync -a --delete peta4:/home/ssg29/config /remote/NAS2/
 0 3 * * 0 du -h --max-depth=2 /remote/NAS2 >> /remote/NAS2/du.txt; /bin/date >> /remote/NAS2/du.txt
 ###########################################
 ## NON CORE (e.g. NON-POPS) DATA TO NAS2 ##
@@ -79,48 +79,48 @@
 ## Marcus Placenta FG & JD #
 ############################
 ## SE50 & GRCh37
-##rsync -av --include='*/' --include='*/unmapped.bam' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.v4/TopHat /media/Sung_ObsGynae/Marcus/SLX-9168.Homo_sapiens.v4/
+##rsync -av --include='*/' --include='*/unmapped.bam' --exclude='*' --exclude='*/logs' peta4:/home/ssg29/results/SLX-9168.Homo_sapiens.v4/TopHat /media/Sung_ObsGynae/Marcus/SLX-9168.Homo_sapiens.v4/
 #
 ## FG.dehuman.Oct.2015 (GRCh37)
-##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.SE125.v1/TopHat /media/Sung_ObsGynae/Marcus/SLX-9168.Homo_sapiens.SE125.v1/
-##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9169.Homo_sapiens.SE125.v1/TopHat /media/Sung_ObsGynae/Marcus/SLX-9169.Homo_sapiens.SE125.v1/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie.fq.gz' --exclude='*' --exclude='*/logs' peta4:/home/ssg29/results/SLX-9168.Homo_sapiens.SE125.v1/TopHat /media/Sung_ObsGynae/Marcus/SLX-9168.Homo_sapiens.SE125.v1/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie.fq.gz' --exclude='*' --exclude='*/logs' peta4:/home/ssg29/results/SLX-9169.Homo_sapiens.SE125.v1/TopHat /media/Sung_ObsGynae/Marcus/SLX-9169.Homo_sapiens.SE125.v1/
 #
 ## FG.dehuman.Nov.2015 (local alignment mode of bowtie2)
-##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie2.local.fq.gz' --exclude='*' --prune-empty-dirs hpc:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/Sung_ObsGynae/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
-##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie2.local.fq.gz' --exclude='*' --prune-empty-dirs hpc:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/Sung_ObsGynae/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie2.local.fq.gz' --exclude='*' --prune-empty-dirs peta4:/home/ssg29/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/Sung_ObsGynae/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.bowtie2.local.fq.gz' --exclude='*' --prune-empty-dirs peta4:/home/ssg29/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/Sung_ObsGynae/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
 #
 ## FG.dehuman.Dec.2015 (local alignment mode of bowtie2)
-##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
-##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.fq.gz' --exclude='*' --exclude='*/logs' peta4:/home/ssg29/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.fq.gz' --exclude='*' --exclude='*/logs' peta4:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
 #
 ## FG.dehuman.Dec.2015 (end-to-end alignment mode of bowtie2)
-##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
-##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.gz' --exclude='*' --exclude='*/logs' peta4:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.gz' --exclude='*' --exclude='*/logs' peta4:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
 #
 ## FG.dehuman.May.2016 (local alignment)
-##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.may2016.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
-##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.may2016.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.may2016.fq.gz' --exclude='*' --exclude='*/logs' peta4:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.local.may2016.fq.gz' --exclude='*' --exclude='*/logs' peta4:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
 #
 ## FG.dehuman.May.2016 (end-to-end alignment)
-##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.may2016.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
-##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.may2016.fq.gz' --exclude='*' --exclude='*/logs' hpc:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.may2016.fq.gz' --exclude='*' --exclude='*/logs' peta4:~/results/SLX-9168.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9168.Homo_sapiens.SE125.v2/
+##rsync -av --include='*/' --include='*/unmapped/unmapped.prep.bt2.may2016.fq.gz' --exclude='*' --exclude='*/logs' peta4:~/results/SLX-9169.Homo_sapiens.SE125.v2/TopHat /media/OBSGYN2/Marcus/SLX-9169.Homo_sapiens.SE125.v2/
 #
 ## JD.dehuman.May.2016 (end-to-end & local)
-##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10281.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
-##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10402.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
-##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-9792.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
-##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10284.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
-##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10285.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
-##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10283.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
-##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10287.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  peta4:/home/ssg29/results/SLX-10281.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  peta4:/home/ssg29/results/SLX-10402.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  peta4:/home/ssg29/results/SLX-9792.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  peta4:/home/ssg29/results/SLX-10284.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  peta4:/home/ssg29/results/SLX-10285.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  peta4:/home/ssg29/results/SLX-10283.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  peta4:/home/ssg29/results/SLX-10287.Homo_sapiens.v1 /media/Sung_ObsGynae/Marcus/JD/
 
 ###########
 ## Sofia ##
 ###########
 ## unmapped.fq.gz to Sofia (JD*7, FG*2)
-##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/dehuman.unfiltered.list.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-10287.Homo_sapiens.v1 /media/Sung_ObsGynae/Sofia/Unfiltered/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/dehuman.unfiltered.list.txt --prune-empty-dirs  peta4:/home/ssg29/results/SLX-10287.Homo_sapiens.v1 /media/Sung_ObsGynae/Sofia/Unfiltered/
 ## FG.dehuman.May.2016 to Sofia (x2)
-##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  hpc:/scratch/ssg29/results/SLX-9169.Homo_sapiens.SE125.v2 /media/Sung_ObsGynae/Sofia/Filtered/
+##rsync -avz --include-from=/media/Sung_ObsGynae/Marcus/JD.dehuman.list.may.2016.txt --prune-empty-dirs  peta4:/home/ssg29/results/SLX-9169.Homo_sapiens.SE125.v2 /media/Sung_ObsGynae/Sofia/Filtered/
 ## rsync -av /remote/NAS1/data/fastq/SLX-9168.SE125/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/fastq/SLX-9168.SE125/
 ## rsync -av /remote/NAS1/data/fastq/SLX-9169.SE125/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/fastq/SLX-9169.SE125/
 
@@ -135,13 +135,13 @@
 ###########################
 ## Marcus Plasma FG 2017 ##
 ###########################
-#rsync -av --delete hpc:~/data/fastq/SLX-9342.PE75/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/Plasma/fastq/SLX-9342.PE75/
-#rsync -av --delete hpc:~/data/fastq/SLX-9345.PE75/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/Plasma/fastq/SLX-9345.PE75/
+#rsync -av --delete peta4:~/data/fastq/SLX-9342.PE75/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/Plasma/fastq/SLX-9342.PE75/
+#rsync -av --delete peta4:~/data/fastq/SLX-9345.PE75/*.fq.gz --exclude '*lostreads.fq.gz' /media/SUNG4TB/data/Plasma/fastq/SLX-9345.PE75/
 
 ############################
 ## Marcus Plasma SML 2017 ##
 ############################
-#rsync -av --delete hpc:~/data/fastq/SLX-SML1/*fq.gz --exclude '*lostreads.fq.gz' /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Unfiltered/
-#rsync -av --update --include='*/' --include='*/unmapped/unmapped.prep.bt2.singletons.merged.fq.gz' --exclude='*' --prune-empty-dirs hpc:~/results/SLX-SML1.Homo_sapiens.v4/TopHat /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Filtered/
-#rsync -av --update --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.1.gz' --exclude='*' --prune-empty-dirs hpc:~/results/SLX-SML1.Homo_sapiens.v4/TopHat /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Filtered/
-#rsync -av --update --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.2.gz' --exclude='*' --prune-empty-dirs hpc:~/results/SLX-SML1.Homo_sapiens.v4/TopHat /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Filtered/
+#rsync -av --delete peta4:~/data/fastq/SLX-SML1/*fq.gz --exclude '*lostreads.fq.gz' /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Unfiltered/
+#rsync -av --update --include='*/' --include='*/unmapped/unmapped.prep.bt2.singletons.merged.fq.gz' --exclude='*' --prune-empty-dirs peta4:~/results/SLX-SML1.Homo_sapiens.v4/TopHat /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Filtered/
+#rsync -av --update --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.1.gz' --exclude='*' --prune-empty-dirs peta4:~/results/SLX-SML1.Homo_sapiens.v4/TopHat /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Filtered/
+#rsync -av --update --include='*/' --include='*/unmapped/unmapped.prep.bt2.fq.2.gz' --exclude='*' --prune-empty-dirs peta4:~/results/SLX-SML1.Homo_sapiens.v4/TopHat /media/ssg29/Sung_ObsGynae/Marcus/Plasma/fastq/Filtered/
