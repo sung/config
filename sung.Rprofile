@@ -1,4 +1,5 @@
 library(colorout)
+library(data.table)
 Sys.setenv("plotly_username"="sunggong")
 Sys.setenv("plotly_api_key"="aoAu3uwtcXuXFS7FOLUg")
 source("https://bioconductor.org/biocLite.R")

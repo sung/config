@@ -1,13 +1,24 @@
-## Screen scroll tips from:
+###################################################
+# from https://gist.github.com/joaopizani/2718397 #
+###################################################
+# the following two lines give a two-line status, with the current window highlighted
+hardstatus alwayslastline
+hardstatus string '%{= kG}[%{G}%H%? %1`%?%{g}][%= %{= kw}%-w%{+b yk} %n*%t%?(%u)%? %{-}%+w %=%{g}][%{B}%m/%d %{W}%C%A%{g}]'
+
+# huge scrollback buffer
+defscrollback 5000
+
+# Screen scroll tips from:
 ### http://liquidat.wordpress.com/2008/10/17/short-tip-gnu-screen-with-proper-scroll-session-management-support/
 termcapinfo xterm* ti@:te@
 
 caption always # activates window caption
-caption string '%{= wk}[ %{k}%H %{k}][%= %{= wk}%?%-Lw%?%{r}(%{r}%n*%f%t%?(%u)%?%{r})%{k}%?%+Lw%?%?%= %{k}][%{b} %d/%m %{k}%c %{k}]' # good looking window bar
+#caption string '%{= wk}[ %{k}%H %{k}][%= %{= wk}%?%-Lw%?%{r}(%{r}%n*%f%t%?(%u)%?%{r})%{k}%?%+Lw%?%?%= %{k}][%{b} %d/%m %{k}%c %{k}]' # good looking window bar
 
 bindkey -k k5 prev # F5 for previous window
 bindkey -k k6 next # F6 for next window
 
+# 256 colors
 term screen-256color
 #term xterm-256color
 attrcolor b ".I"    # allow bold colors - necessary for some reason

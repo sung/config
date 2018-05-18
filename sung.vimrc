@@ -9,7 +9,6 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'flazz/vim-colorschemes' " colour scheme
 Plugin 'morhetz/gruvbox'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'junegunn/seoul256.vim'
 Plugin 'jalvesaq/Nvim-R'
 Plugin 'vim-scripts/TeTrIs.vim'
@@ -40,8 +39,6 @@ filetype plugin indent on    " required
 "set termguicolors " DOES NOT WORK WITH SCREEN
 "let g:gruvbox_italic  =1
 "colorscheme gruvbox
-"let g:solarized_termcolors=256
-"colorscheme solarized
 colorscheme jellybeans 
 "colorscheme seoul256 
 set bg=dark
