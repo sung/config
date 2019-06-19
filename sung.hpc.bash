@@ -15,7 +15,6 @@ set -o vi
 # echo -e "\e[3m is this italics? \e[23m"
 # printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
 #export TERM=xterm-256color-italic
-export TERM=xterm-256color
 
 #######################################
 # User specific aliases and functions #
@@ -83,6 +82,9 @@ PATH=$HOME/Install/methpipe/bin:$PATH
 PATH=$HOME/Install/bedops_linux_x86_64-v2.4.15/bin:$PATH
 PATH=$HOME/Install/bedtools/bin:$PATH
 PATH=$HOME/Install/pigz-2.4:$PATH # used by cutadapt (via python3)
+PATH=$HOME/Install/gffread:$PATH
+PATH=$HOME/Install/gffcompare:$PATH
+PATH=$HOME/Install/taco:$PATH
 #PATH=$HOME/Install/CPAT/usr/local/Cluster-Apps/python/2.7.5/bin:$PATH
 #PATH=$HOME/Install/RSeQC-2.6.4/usr/bin:$PATH # ()installed via pip)
 #PATH=$HOME/Install/HTSeq/scripts:$PATH # ()installed via pip)

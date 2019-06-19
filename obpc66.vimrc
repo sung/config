@@ -22,6 +22,7 @@ Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'bioSyntax/bioSyntax-vim'
+Plugin 'tmux-plugins/vim-tmux'
 " Plugin 'jalvesaq/R-Vim-runtime'
 " Plugin 'vim-scripts/Vim-R-plugin'
 " git repos on your local machine (i.e. when working on your own plugin) 

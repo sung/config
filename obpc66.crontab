@@ -39,10 +39,10 @@
 #######################
 ### UIS HPC to Local ##
 #######################
-0 4 * * 0 rsync -a --delete peta4:$HOME/Pipelines $HOME/
-0 5 * * * rsync -a --delete peta4:$HOME/bin $HOME/
-0 6 * * * rsync -a --update peta4:$HOME/config $HOME/
-0 6 * * * rsync -a --update peta4:$hOME/Install $HOME/
+0 4 * * 0 rsync -a --delete peta4:/home/ssg29/Pipelines $HOME/
+0 5 * * * rsync -a --delete peta4:/home/ssg29/bin $HOME/
+0 6 * * * rsync -a --update peta4:/home/ssg29/config $HOME/
+0 6 * * * rsync -a --update peta4:/home/ssg29/Install $HOME/
 #############################
 ### UIS to NAS1 (Synology) ##
 #############################

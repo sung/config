@@ -11,7 +11,13 @@ Plugin 'flazz/vim-colorschemes' " colour scheme
 Plugin 'morhetz/gruvbox'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'junegunn/seoul256.vim'
+"Plugin 'roxma/nvim-completion-manager' " https://github.com/gaalcaras/ncm-R
+" the module above required python-enabled vim version
 Plugin 'jalvesaq/Nvim-R'
+Plugin 'gaalcaras/ncm-R' " https://github.com/gaalcaras/ncm-R
+"Plugin 'roxma/vim-hug-neovim-rpc' " Vim 8 only
+" Plugin 'sirver/UltiSnips' " Optional: for snippet support
+Plugin 'lervag/vimtex' " Optional: better Rnoweb support (LaTeX completion)
 Plugin 'vim-scripts/TeTrIs.vim'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
@@ -22,11 +28,11 @@ Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'bioSyntax/bioSyntax-vim'
+Plugin 'tmux-plugins/vim-tmux'
 " Plugin 'jalvesaq/R-Vim-runtime'
 " Plugin 'vim-scripts/Vim-R-plugin'
 " git repos on your local machine (i.e. when working on your own plugin) 
 " Plugin 'file://~/.vim/plugin'
-
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -127,6 +133,16 @@ let b:tt2_syn_tags = '\[% %] <!-- -->' " TT2 and HTML
 " Pathogen (http://www.bestofvim.com/plugin/pathogen/)
 " call pathogen#infect() " replaced with Vundble on top 
 
+"""""""""""""""""""""""""""""""""""""""""""""""
+" /roxma/nvim-completion-manager#requirements " 
+"""""""""""""""""""""""""""""""""""""""""""""""
+let g:python3_host_prog="/usr/local/software/spack/spack-0.11.2/opt/spack/linux-rhel7-x86_64/gcc-5.4.0/python-3.6.1-xk7ym4l5glcf6ond7yszv2i5gz3wnv2b/bin/python3"
+if has('python3')                                                                                                 
+    set pyx=3                                                                     
+else                                                                            
+    set pyx=2                                                                     
+endif
+
 """"""""""
 " Nvim-R "
 """"""""""
@@ -134,10 +150,11 @@ if $DISPLAY != ""
 	let R_openpdf = 1 
 endif
 let R_openhtml = 1 
-let R_pdfviewer = "evince"
+let R_pdfviewer = "xpdf"
 vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
 let R_show_args = 1 
+let R_assign = 3
 "autocmd FileType r if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | endif
 "autocmd FileType rmd if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | endif
 "autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
