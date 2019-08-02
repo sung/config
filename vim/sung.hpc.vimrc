@@ -11,16 +11,21 @@ Plugin 'flazz/vim-colorschemes' " colour scheme
 Plugin 'morhetz/gruvbox'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'junegunn/seoul256.vim'
-"Plugin 'roxma/nvim-completion-manager' " https://github.com/gaalcaras/ncm-R
-" the module above required python-enabled vim version
+Plugin 'ncm2/ncm2'
+Plugin 'roxma/vim-hug-neovim-rpc' " Vim 8 only
 Plugin 'jalvesaq/Nvim-R'
 Plugin 'gaalcaras/ncm-R' " https://github.com/gaalcaras/ncm-R
-"Plugin 'roxma/vim-hug-neovim-rpc' " Vim 8 only
-" Plugin 'sirver/UltiSnips' " Optional: for snippet support
+Plugin 'ervandew/supertab'
+Plugin 'sirver/UltiSnips' " Optional: for snippet support UltiSnips requires py >= 2.7 or py3
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'ncm2/ncm2-ultisnips'
+Plugin 'honza/vim-snippets'
 Plugin 'lervag/vimtex' " Optional: better Rnoweb support (LaTeX completion)
 Plugin 'vim-scripts/TeTrIs.vim'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plugin 'vim-pandoc/vim-rmarkdown'
+Plugin 'chrisbra/NrrwRgn'
 Plugin 'scrooloose/nerdtree'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'Yggdroot/indentLine'
@@ -29,8 +34,8 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'bioSyntax/bioSyntax-vim'
 Plugin 'tmux-plugins/vim-tmux'
-" Plugin 'jalvesaq/R-Vim-runtime'
-" Plugin 'vim-scripts/Vim-R-plugin'
+Plugin 'WolfgangMehner/perl-support'
+" Plugin 'aperezdc/vim-template'
 " git repos on your local machine (i.e. when working on your own plugin) 
 " Plugin 'file://~/.vim/plugin'
 " All of your Plugins must be added before the following line
@@ -120,6 +125,21 @@ else
 	inoremap <Nul> <C-x><C-o>
 endif
 
+
+"
+" YCM & UltiSnppet
+"
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+"
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+
 """"""""""""""""""""""""" 
 " perl template toolkit "
 """"""""""""""""""""""""" 
@@ -136,12 +156,12 @@ let b:tt2_syn_tags = '\[% %] <!-- -->' " TT2 and HTML
 """""""""""""""""""""""""""""""""""""""""""""""
 " /roxma/nvim-completion-manager#requirements " 
 """""""""""""""""""""""""""""""""""""""""""""""
-let g:python3_host_prog="/usr/local/software/spack/spack-0.11.2/opt/spack/linux-rhel7-x86_64/gcc-5.4.0/python-3.6.1-xk7ym4l5glcf6ond7yszv2i5gz3wnv2b/bin/python3"
-if has('python3')                                                                                                 
-    set pyx=3                                                                     
-else                                                                            
-    set pyx=2                                                                     
-endif
+"let g:python3_host_prog="/usr/local/software/spack/spack-0.11.2/opt/spack/linux-rhel7-x86_64/gcc-5.4.0/python-3.6.1-xk7ym4l5glcf6ond7yszv2i5gz3wnv2b/bin/python3"
+"if has('python3')                                                                                                 
+"    set pyx=3                                                                     
+"else                                                                            
+"    set pyx=2                                                                     
+"endif
 
 """"""""""
 " Nvim-R "
@@ -155,9 +175,22 @@ vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
 let R_show_args = 1 
 let R_assign = 3
-"autocmd FileType r if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | endif
-"autocmd FileType rmd if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | endif
-"autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
+let R_rconsole_width=125
+
+
+" If you do not want to run R in Vim/Neovim's built in terminal emulator, you
+" have to install Tmux >= 2.0, and then put in your |vimrc|:
+"let R_in_buffer = 1 
+"use my own tmux conf (i.e. ~/.tmux.conf)
+"let R_notmuxconf = 1 
+" If you are running Vim/Neovim within Tmux, you may prefer:
+let R_csv_app = 'tmux new-window scim --txtdelim="\t"'
+
+" R output is highlighted with current colorscheme
+let g:rout_follow_colorscheme = 1
+" R commands in R output are highlighted
+let g:Rout_more_colors = 1"
+
 
 """""""""""""""
 " IndentGuide "
@@ -195,3 +228,10 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 set laststatus=2
 syntax enable
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" configuration for vim-pandoc and vim-rmarkdown
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:pandoc#modules#disabled = ["spell"]
+let g:pandoc#syntax#conceal#use = 0
+

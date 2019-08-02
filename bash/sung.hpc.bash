@@ -2,7 +2,8 @@
 # sung's bashrc #
 #################
 # VIM first 
-export EDITOR=$HOME/bin/vim
+#export EDITOR=$HOME/bin/vim
+export EDITOR=vim
 #setterm -blength 0
 set -o vi
 
@@ -22,7 +23,8 @@ set -o vi
 alias ls='ls -F --color=auto'
 alias ll='ls -l'
 alias grep='grep --color=auto'
-alias vi='~/bin/vim'
+#alias vi='~/bin/vim'
+alias vi='vim'
 alias ssh='ssh -XC'
 alias netstat='netstat -plntu'
 alias ifconfig='/sbin/ifconfig'
