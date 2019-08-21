@@ -7,37 +7,49 @@ set rtp+=~/.vim/bundle/Vundle.vim " set the runtime path to include Vundle and i
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
+" color schemes
 Plugin 'flazz/vim-colorschemes' " colour scheme
 Plugin 'morhetz/gruvbox'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'junegunn/seoul256.vim'
+Plugin 'bioSyntax/bioSyntax-vim'
+" auto completion & code snippets (mainly for ncm-R)
 Plugin 'ncm2/ncm2'
-Plugin 'roxma/vim-hug-neovim-rpc' " Vim 8 only
+Plugin 'roxma/nvim-yarp'
 Plugin 'jalvesaq/Nvim-R'
-Plugin 'gaalcaras/ncm-R' " https://github.com/gaalcaras/ncm-R
-Plugin 'ervandew/supertab'
+Plugin 'gaalcaras/ncm-R' " R autocompletion for Neovim and vim 8 
+Plugin 'roxma/vim-hug-neovim-rpc' " Vim 8 only
 Plugin 'sirver/UltiSnips' " Optional: for snippet support UltiSnips requires py >= 2.7 or py3
-Plugin 'ycm-core/YouCompleteMe'
 Plugin 'ncm2/ncm2-ultisnips'
-Plugin 'honza/vim-snippets'
 Plugin 'lervag/vimtex' " Optional: better Rnoweb support (LaTeX completion)
-Plugin 'vim-scripts/TeTrIs.vim'
+Plugin 'ncm2/ncm2-bufword'
+Plugin 'ncm2/ncm2-path'
+
+Plugin 'honza/vim-snippets'
+Plugin 'ervandew/supertab'
+Plugin 'ycm-core/YouCompleteMe' "very glitch - do not seem to work perfectly
+Plugin 'ajh17/VimCompletesMe'
+" pandoc
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'vim-pandoc/vim-rmarkdown'
 Plugin 'chrisbra/NrrwRgn'
+" productivity
 Plugin 'scrooloose/nerdtree'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'Yggdroot/indentLine'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'bioSyntax/bioSyntax-vim'
 Plugin 'tmux-plugins/vim-tmux'
+Plugin 'cespare/vim-toml'
 Plugin 'WolfgangMehner/perl-support'
+" for fun
+Plugin 'vim-scripts/TeTrIs.vim'
 " Plugin 'aperezdc/vim-template'
 " git repos on your local machine (i.e. when working on your own plugin) 
 " Plugin 'file://~/.vim/plugin'
+"
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -113,33 +125,6 @@ nnoremap <silent> <F8> :NERDTreeToggle<CR>
 au BufWinLeave ? mkview
 au BufWinEnter ? silent loadview
 
-""""""""""""
-" supertab "
-""""""""""""
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
-" Use Ctrl+Space to do omnicompletion:
-if has("gui_running")
-	inoremap <C-Space> <C-x><C-o>
-else
-	inoremap <Nul> <C-x><C-o>
-endif
-
-
-"
-" YCM & UltiSnppet
-"
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-"
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-
 """"""""""""""""""""""""" 
 " perl template toolkit "
 """"""""""""""""""""""""" 
@@ -152,16 +137,6 @@ let b:tt2_syn_tags = '\[% %] <!-- -->' " TT2 and HTML
 
 " Pathogen (http://www.bestofvim.com/plugin/pathogen/)
 " call pathogen#infect() " replaced with Vundble on top 
-
-"""""""""""""""""""""""""""""""""""""""""""""""
-" /roxma/nvim-completion-manager#requirements " 
-"""""""""""""""""""""""""""""""""""""""""""""""
-"let g:python3_host_prog="/usr/local/software/spack/spack-0.11.2/opt/spack/linux-rhel7-x86_64/gcc-5.4.0/python-3.6.1-xk7ym4l5glcf6ond7yszv2i5gz3wnv2b/bin/python3"
-"if has('python3')                                                                                                 
-"    set pyx=3                                                                     
-"else                                                                            
-"    set pyx=2                                                                     
-"endif
 
 """"""""""
 " Nvim-R "
@@ -176,8 +151,10 @@ nmap <Space> <Plug>RDSendLine
 let R_show_args = 1 
 let R_assign = 3
 let R_rconsole_width=125
-
-
+"autocmd FileType r if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | endif
+"autocmd FileType rmd if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | endif
+"autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
+"
 " If you do not want to run R in Vim/Neovim's built in terminal emulator, you
 " have to install Tmux >= 2.0, and then put in your |vimrc|:
 "let R_in_buffer = 1 
@@ -185,13 +162,33 @@ let R_rconsole_width=125
 "let R_notmuxconf = 1 
 " If you are running Vim/Neovim within Tmux, you may prefer:
 let R_csv_app = 'tmux new-window scim --txtdelim="\t"'
-
 " R output is highlighted with current colorscheme
 let g:rout_follow_colorscheme = 1
 " R commands in R output are highlighted
 let g:Rout_more_colors = 1"
 
+"""""""""""""""""""""""""""""
+" roxma/vim-hug-neovim-rpc
+"""""""""""""""""""""""""""""
+set pyxversion=3
+set encoding=utf-8
 
+""""""""""""""""
+" ncm2/ncm2
+""""""""""""""""
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+" https://github.com/ncm2/ncm2#requirements
+" let g:python3_host_prog="/usr/bin/python3" 
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+set shortmess+=c
+" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. Use this mapping to close the menu and also start a new line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+"
 """""""""""""""
 " IndentGuide "
 """""""""""""""
@@ -235,3 +232,28 @@ syntax enable
 let g:pandoc#modules#disabled = ["spell"]
 let g:pandoc#syntax#conceal#use = 0
 
+""""""""""""
+" supertab "
+""""""""""""
+"let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+" Use Ctrl+Space to do omnicompletion:
+if has("gui_running")
+	inoremap <C-Space> <C-x><C-o>
+else
+	inoremap <Nul> <C-x><C-o>
+endif
+
+"""""""""""""""""""
+" YCM & UltiSnppet
+" https://stackoverflow.com/questions/14896327/ultisnips-and-YouCompleteMe
+""""""""""""""""""""""""
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+"
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"

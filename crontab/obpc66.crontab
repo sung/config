@@ -34,13 +34,13 @@
 ##############################
 ### Save configuration files #
 ##############################
-0 0 * * * crontab -l > $HOME/config/obpc66.crontab
-0 0 * * * cp -a /etc/fstab $HOME/config/obpc66.fstab
+0 0 * * * crontab -l > $HOME/config/crontab/obpc66.crontab
+0 0 * * * cp -a /etc/fstab $HOME/config/fstab/obpc66.fstab
 #######################
 ### UIS HPC to Local ##
 #######################
 0 4 * * 0 rsync -a --delete peta4:/home/ssg29/Pipelines $HOME/
-0 5 * * * rsync -a --delete peta4:/home/ssg29/bin $HOME/
+0 5 * * * rsync -a --update peta4:/home/ssg29/bin $HOME/
 0 6 * * * rsync -a --update peta4:/home/ssg29/config $HOME/
 0 6 * * * rsync -a --update peta4:/home/ssg29/Install $HOME/
 #############################
