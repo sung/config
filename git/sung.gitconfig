@@ -1,0 +1,18 @@
+[credential]
+    helper = cache
+[user]
+	name = Sung Gong
+	email = sung@bio.cc
+[color]
+	ui = auto
+[core]
+	editor = vim
+[alias]
+    co = checkout
+    ci = commit
+    st = status
+    br = branch
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+    tree = log --graph --oneline --all --decorate
+    type = cat-file -t
+    dump = cat-file -p
