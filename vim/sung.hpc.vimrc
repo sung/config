@@ -32,7 +32,7 @@ Plugin 'ajh17/VimCompletesMe'
 " pandoc
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
-Plugin 'vim-pandoc/vim-rmarkdown'
+"Plugin 'vim-pandoc/vim-rmarkdown'
 Plugin 'chrisbra/NrrwRgn'
 " productivity
 Plugin 'scrooloose/nerdtree'
@@ -61,12 +61,15 @@ filetype plugin indent on    " required
 	set t_Co=256
 "endif
 "set termguicolors " DOES NOT WORK WITH SCREEN
-"let g:gruvbox_italic  =1
-"colorscheme gruvbox
-"let g:solarized_termcolors=256
-"colorscheme solarized
-colorscheme jellybeans 
-"colorscheme seoul256 
+if hostname() == 'obpc66'
+    colorscheme gruvbox
+    let g:gruvbox_italic  =1
+else
+    "let g:solarized_termcolors=256
+    "colorscheme solarized
+    colorscheme jellybeans 
+    "colorscheme seoul256 
+endif
 set bg=dark
 
 """"""""""""
@@ -145,7 +148,7 @@ if $DISPLAY != ""
 	let R_openpdf = 1 
 endif
 let R_openhtml = 1 
-let R_pdfviewer = "xpdf"
+let R_pdfviewer = "evince" " xpdf
 vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
 let R_show_args = 1 

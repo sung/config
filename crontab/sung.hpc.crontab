@@ -12,7 +12,7 @@ PATH=$HOME/Install/CPAT/usr/local/Cluster-Apps/python/2.7.5/bin:$HOME/Install/be
 ##########
 # BACKUP #
 ##########
-0 0 * * * crontab -l > $HOME/config/sung.hpc.crontab
+0 0 * * * crontab -l > $HOME/config/crontab/sung.hpc.crontab
 0 0 * * 0 /usr/local/Cluster-Apps/slurm/bin/mybalance >> $HOME/Pipelines/mybalance.txt; /bin/date >> $HOME/Pipelines/mybalance.txt
 #0 0 * * 0 /usr/bin/du -h --max-depth=2 $HOME/rds/rds-ssg29-obsgynae/POPS >> $HOME/Pipelines/du.txt; /bin/date >> $HOME/Pipelines/du.txt
 #0 0 * * 0 /usr/bin/du -h --max-depth=2 $HOME/rcs/rcs-ssg29-obsgynae/POPS >> $HOME/rcs/rcs-ssg29-obsgynae/POPS/du.txt ; /bin/date >> $HOME/rcs/rcs-ssg29-obsgynae/POPS/du.txt
