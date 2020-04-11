@@ -37,7 +37,7 @@ filetype plugin indent on    " required
 " Color "
 """""""""
 "if $COLORTERM == 'gnome-terminal'
-	set t_Co=256
+"	set t_Co=256
 "endif
 "set termguicolors " DOES NOT WORK WITH SCREEN
 let g:gruvbox_italic  =1
