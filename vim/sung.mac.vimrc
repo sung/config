@@ -13,6 +13,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'junegunn/seoul256.vim'
 Plugin 'jalvesaq/Nvim-R'
 Plugin 'vim-scripts/TeTrIs.vim'
+Plugin 'vim-scripts/taglist.vim'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'scrooloose/nerdtree'
@@ -178,4 +179,5 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
+
 set laststatus=2
