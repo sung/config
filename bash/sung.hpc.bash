@@ -28,13 +28,17 @@ alias vi='vim'
 alias ssh='ssh -XC'
 alias netstat='netstat -plntu'
 alias ifconfig='/sbin/ifconfig'
-alias igv='java -Xmx1500m -jar ~/Install/IGV/igv.jar'
+#alias igv='java -Xmx1500m -jar ~/Install/IGV/igv.jar' # java8 for ~/Install/IGV_2.3.34
+alias igv='bash ~/Install/IGV_2.7.2/igv.sh' # java11 for ~/Install/IGV_2.7.2
 alias h5dump='/usr/bin/h5dump'
 #alias vep='/data/Install/Perl/vep/variant_effect_predictor.pl'
 alias preseq='~/Install/preseq/preseq'
 alias seqtk='~/Install/seqtk/seqtk'
 #alias tabix='/data/Install/tabix/tabix'
 #alias bgzip='/data/Install/tabix/bgzip'
+alias smk=snakemake
+alias smk-dag='smk --dag | dot -Tsvg > dag.svg'
+alias neofetch='~/Install/neofetch/neofetch'
 
 ############
 ## PYTHON ##
@@ -42,8 +46,8 @@ alias seqtk='~/Install/seqtk/seqtk'
 #PYTHONPATH=$PYTHONPATH:$HOME/Install/MACS2/lib/python2.7/site-packages
 #PYTHONPATH=/home/ssg29/Install/seqcluster/anaconda/lib/python2.7/site-packages:$PYTHONPATH
 #PYTHONPATH=$HOME/Install/RSeQC-2.6.4/usr/lib/python2.7/site-packages:$PYTHONPATH
-PYTHONPATH=$HOME/.local/lib/python2.7/site-packages:$PYTHONPATH
-export PYTHONPATH
+#PYTHONPATH=$HOME/.local/lib/python2.7/site-packages:$PYTHONPATH
+#export PYTHONPATH
 
 ########
 # PATH #
@@ -86,6 +90,7 @@ PATH=$HOME/Install/pigz-2.4:$PATH # used by cutadapt (via python3)
 PATH=$HOME/Install/gffread:$PATH
 PATH=$HOME/Install/gffcompare:$PATH
 PATH=$HOME/Install/taco:$PATH
+PATH=$HOME/Install/jdk-11/bin:$PATH
 #PATH=$HOME/Install/CPAT/usr/local/Cluster-Apps/python/2.7.5/bin:$PATH
 #PATH=$HOME/Install/RSeQC-2.6.4/usr/bin:$PATH # ()installed via pip)
 #PATH=$HOME/Install/HTSeq/scripts:$PATH # ()installed via pip)
@@ -103,5 +108,7 @@ export PERL5LIB=$HOME/perl5/lib/perl5:$HOME/Install/vcftools/perl:$PERL5LIB
 # LD_LIB_PATH #
 ###############
 #export LD_LIBRARY_PATH=$HOME/Install/samtools:$HOME/Install/htslib:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=$HOME/local/lib/:${LD_LIBRARY_PATH}
+LD_LIBRARY_PATH=$HOME/local/lib/:${LD_LIBRARY_PATH}
+#LD_LIBRARY_PATH=/usr/local/software/spack/develop-290617/spack/opt/spack/linux-rhel7-x86_64/gcc-4.8.5/gcc-5.4.0-fis24ggupugiobii56fesif2y3qulpdr/lib64/:${LD_LIBRARY_PATH}
+export LD_LIB_PATH 
 #export INCLUDE=$HOME/Install/samtools:$HOME/Install/htslib:$INCLUDE
