@@ -13,5 +13,5 @@ alias ls='ls -F --color=auto'
 alias ll='ls -l'
 alias grep='grep --color=auto'
 alias vi='vim'
-alias ssh='ssh -XC'
-
+#alias ssh='ssh -XC'
+alias ssh='ssh -XY'
