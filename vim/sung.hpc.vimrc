@@ -16,19 +16,19 @@ Plugin 'bioSyntax/bioSyntax-vim'
 " auto completion & code snippets (mainly for ncm-R)
 Plugin 'ncm2/ncm2'
 Plugin 'roxma/nvim-yarp'
-Plugin 'jalvesaq/Nvim-R'
-Plugin 'gaalcaras/ncm-R' " R autocompletion for Neovim and vim 8 
 Plugin 'roxma/vim-hug-neovim-rpc' " Vim 8 only
-Plugin 'sirver/UltiSnips' " Optional: for snippet support UltiSnips requires py >= 2.7 or py3
 Plugin 'ncm2/ncm2-ultisnips'
-Plugin 'lervag/vimtex' " Optional: better Rnoweb support (LaTeX completion)
 Plugin 'ncm2/ncm2-bufword'
 Plugin 'ncm2/ncm2-path'
-
 Plugin 'honza/vim-snippets'
 Plugin 'ervandew/supertab'
+Plugin 'sirver/UltiSnips' " Optional: for snippet support UltiSnips requires py >= 2.7 or py3
 Plugin 'ycm-core/YouCompleteMe' "very glitch - do not seem to work perfectly
 Plugin 'ajh17/VimCompletesMe'
+" Nvim-R
+Plugin 'jalvesaq/Nvim-R'
+Plugin 'gaalcaras/ncm-R' " R autocompletion for Neovim and vim 8 
+Plugin 'lervag/vimtex' " Optional: better Rnoweb support (LaTeX completion)
 " pandoc
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
@@ -44,12 +44,11 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'cespare/vim-toml'
 Plugin 'WolfgangMehner/perl-support'
+" Plugin 'aperezdc/vim-template'
 " for fun
 Plugin 'vim-scripts/TeTrIs.vim'
-" Plugin 'aperezdc/vim-template'
 " git repos on your local machine (i.e. when working on your own plugin) 
 " Plugin 'file://~/.vim/plugin'
-"
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
