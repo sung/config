@@ -47,6 +47,7 @@ Plugin 'WolfgangMehner/perl-support'
 " Plugin 'aperezdc/vim-template'
 " for fun
 Plugin 'vim-scripts/TeTrIs.vim'
+Plugin 'twitvim/twitvim.git'
 " git repos on your local machine (i.e. when working on your own plugin) 
 " Plugin 'file://~/.vim/plugin'
 " All of your Plugins must be added before the following line
@@ -68,6 +69,8 @@ else
     "colorscheme solarized
     colorscheme jellybeans 
     "colorscheme seoul256 
+    "colorscheme gruvbox
+    "let g:gruvbox_italic  =1
 endif
 set bg=dark
 
@@ -259,3 +262,22 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+
+"""""""""""""""""""""
+"" snakemake syntax "
+"""""""""""""""""""""
+au BufNewFile,BufRead Snakefile set syntax=snakemake
+au BufNewFile,BufRead *.smk set syntax=snakemake
+
+"""""""""""""""
+" Spell check "
+"""""""""""""""
+"set spell spelllang=en_gb
+set spellfile=$HOME/.vim/spell/en.utf-8.add
+
+""""""""""""
+" twitvim
+""""""""""""
+"let twitvim_enable_perl = 1
+let twitvim_enable_python3 = 1
