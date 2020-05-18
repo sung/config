@@ -39,9 +39,12 @@ alias seqtk='~/Install/seqtk/seqtk'
 alias smk=snakemake
 alias smk-dag='smk --dag | dot -Tsvg > dag.svg'
 alias neofetch='~/Install/neofetch/neofetch'
+alias STAR="~/Install/STAR-2.5.3a/source/STAR"
 
 ############
 ## PYTHON ##
+## Below will conflicts with python from local conda
+## DO NOT USE
 ############
 #PYTHONPATH=$PYTHONPATH:$HOME/Install/MACS2/lib/python2.7/site-packages
 #PYTHONPATH=/home/ssg29/Install/seqcluster/anaconda/lib/python2.7/site-packages:$PYTHONPATH
@@ -65,7 +68,7 @@ PATH=$HOME/Install/trim_galore_v0.4.0:$PATH
 PATH=$HOME/Install/bowtie:$PATH
 PATH=$HOME/Install/bwa:$PATH
 PATH=$HOME/Install/hisat2:$PATH
-PATH=$HOME/Install/STAR_2.4.2a/bin/Linux_x86_64_static:$PATH
+#PATH=$HOME/Install/STAR_2.4.2a/bin/Linux_x86_64_static:$PATH
 PATH=$HOME/Install/stringtie:$PATH
 PATH=$HOME/Install/subread/bin:$PATH
 PATH=$HOME/Install/Salmon/bin:$PATH
