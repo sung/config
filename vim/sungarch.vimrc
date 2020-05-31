@@ -43,6 +43,7 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'cespare/vim-toml'
+Plugin 'vim-scripts/taglist.vim'
 "Plugin 'WolfgangMehner/perl-support'
 " Plugin 'aperezdc/vim-template'
 " for fun
