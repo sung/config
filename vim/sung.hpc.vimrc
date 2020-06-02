@@ -67,9 +67,9 @@ if hostname() == 'obpc66'
 else
     "let g:solarized_termcolors=256
     "colorscheme solarized
-    colorscheme jellybeans 
+    "colorscheme jellybeans 
     "colorscheme seoul256 
-    "colorscheme gruvbox
+    colorscheme gruvbox
     "let g:gruvbox_italic  =1
 endif
 set bg=dark
