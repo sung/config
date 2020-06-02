@@ -6,7 +6,7 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim " set the runtime path to include Vundle and initialize
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim' " let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
 Plugin 'flazz/vim-colorschemes' " colour scheme
 Plugin 'morhetz/gruvbox'
 Plugin 'altercation/vim-colors-solarized'
