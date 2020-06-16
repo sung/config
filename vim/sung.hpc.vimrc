@@ -70,7 +70,7 @@ else
     "colorscheme jellybeans 
     "colorscheme seoul256 
     colorscheme gruvbox
-    "let g:gruvbox_italic  =1
+    let g:gruvbox_italic  =1
 endif
 set bg=dark
 

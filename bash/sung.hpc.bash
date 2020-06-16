@@ -15,7 +15,7 @@ set -o vi
 # https://gist.github.com/XVilka/8346728
 # echo -e "\e[3m is this italics? \e[23m"
 # printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
-#export TERM=xterm-256color-italic
+export TERM=xterm-256color-italic
 
 #######################################
 # User specific aliases and functions #
