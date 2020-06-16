@@ -2,7 +2,7 @@
 " Vundle (https://github.com/gmarik/Vundle.vim) "
 """""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible
-filetype off 
+filetype off
 set rtp+=~/.vim/bundle/Vundle.vim " set the runtime path to include Vundle and initialize
 call vundle#begin()
 
