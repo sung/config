@@ -7,29 +7,56 @@ set rtp+=~/.vim/bundle/Vundle.vim " set the runtime path to include Vundle and i
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim' " let Vundle manage Vundle, required
-Plugin 'flazz/vim-colorschemes' " colour scheme
+" colour scheme
+Plugin 'flazz/vim-colorschemes' 
 Plugin 'morhetz/gruvbox'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'junegunn/seoul256.vim'
+Plugin 'bioSyntax/bioSyntax-vim'
+" auto completion & code snippets (mainly for ncm-R)
+Plugin 'ncm2/ncm2'
+Plugin 'roxma/nvim-yarp'
+Plugin 'roxma/vim-hug-neovim-rpc' " Vim 8 only
+Plugin 'ncm2/ncm2-ultisnips'
+Plugin 'ncm2/ncm2-bufword'
+Plugin 'ncm2/ncm2-path'
+Plugin 'ncm2/ncm2-github'
+Plugin 'ncm2/ncm2-tmux'
+Plugin 'filipekiss/ncm2-look.vim'
+Plugin 'ncm2/ncm2-syntax' 
+Plugin 'Shougo/neco-syntax'
+Plugin 'wellle/tmux-complete.vim'
+Plugin 'honza/vim-snippets'
+Plugin 'ervandew/supertab'
+Plugin 'sirver/UltiSnips' " Optional: for snippet support UltiSnips requires py >= 2.7 or py3
+"Plugin 'ycm-core/YouCompleteMe' "very glitch - do not seem to work perfectly
+"Plugin 'ajh17/VimCompletesMe'
+" Nvim-R
 Plugin 'jalvesaq/Nvim-R'
-Plugin 'vim-scripts/TeTrIs.vim'
-Plugin 'vim-scripts/taglist.vim'
+Plugin 'gaalcaras/ncm-R' " R autocompletion for Neovim and vim 8 
+Plugin 'lervag/vimtex' " Optional: better Rnoweb support (LaTeX completion)
+" pandoc
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
+"Plugin 'vim-pandoc/vim-rmarkdown'
+Plugin 'chrisbra/NrrwRgn'
+" productivity
 Plugin 'scrooloose/nerdtree'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'Yggdroot/indentLine'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'bioSyntax/bioSyntax-vim'
 Plugin 'tmux-plugins/vim-tmux'
 Plugin 'cespare/vim-toml'
-" Plugin 'jalvesaq/R-Vim-runtime'
-" Plugin 'vim-scripts/Vim-R-plugin'
+Plugin 'WolfgangMehner/perl-support'
+Plugin 'vim-scripts/taglist.vim'
+" Plugin 'aperezdc/vim-template'
+" for fun
+Plugin 'vim-scripts/TeTrIs.vim'
+Plugin 'twitvim/twitvim.git'
 " git repos on your local machine (i.e. when working on your own plugin) 
 " Plugin 'file://~/.vim/plugin'
-
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -105,18 +132,6 @@ nnoremap <silent> <F8> :NERDTreeToggle<CR>
 au BufWinLeave ? mkview
 au BufWinEnter ? silent loadview
 
-""""""""""""
-" supertab "
-""""""""""""
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
-" Use Ctrl+Space to do omnicompletion:
-if has("gui_running")
-	inoremap <C-Space> <C-x><C-o>
-else
-	inoremap <Nul> <C-x><C-o>
-endif
-
 """"""""""""""""""""""""" 
 " perl template toolkit "
 """"""""""""""""""""""""" 
@@ -137,14 +152,50 @@ if $DISPLAY != ""
 	let R_openpdf = 1
 endif
 let R_openhtml = 1
-let R_pdfviewer = "evince"
+let R_pdfviewer = "open"
 vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
-let R_show_args = 1
+"let R_show_args = 1
+let R_assign = 3
+let R_rconsole_width=125
 "autocmd FileType r if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | endif
 "autocmd FileType rmd if string(g:SendCmdToR) == "function('SendCmdToR_fake')" | call StartR("R") | endif
 "autocmd VimLeave * if exists("g:SendCmdToR") && string(g:SendCmdToR) != "function('SendCmdToR_fake')" | call RQuit("nosave") | endif
+"
+" If you do not want to run R in Vim/Neovim's built in terminal emulator, you
+" have to install Tmux >= 2.0, and then put in your |vimrc|:
+"let R_in_buffer = 1 
+"use my own tmux conf (i.e. ~/.tmux.conf)
+"let R_notmuxconf = 1 
+" If you are running Vim/Neovim within Tmux, you may prefer:
+let R_csv_app = 'tmux new-window scim --txtdelim="\t"'
+" R output is highlighted with current colorscheme
+let g:rout_follow_colorscheme = 1
+" R commands in R output are highlighted
+let g:Rout_more_colors = 1"
 
+"""""""""""""""""""""""""""""
+" roxma/vim-hug-neovim-rpc
+"""""""""""""""""""""""""""""
+set pyxversion=3
+set encoding=utf-8
+
+""""""""""""""""
+" ncm2/ncm2
+""""""""""""""""
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+" https://github.com/ncm2/ncm2#requirements
+" let g:python3_host_prog="/usr/bin/python3" 
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+set shortmess+=c
+" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. Use this mapping to close the menu and also start a new line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+"
 """""""""""""""
 " IndentGuide "
 """""""""""""""
@@ -179,5 +230,62 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
-
 set laststatus=2
+syntax enable
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+" configuration for vim-pandoc and vim-rmarkdown
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:pandoc#modules#disabled = ["spell"]
+let g:pandoc#syntax#conceal#use = 0
+
+""""""""""""
+" supertab "
+""""""""""""
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+" Use Ctrl+Space to do omnicompletion:
+if has("gui_running")
+	inoremap <C-Space> <C-x><C-o>
+else
+	inoremap <Nul> <C-x><C-o>
+endif
+
+"""""""""""""""""""
+" YCM & UltiSnppet
+" https://stackoverflow.com/questions/14896327/ultisnips-and-YouCompleteMe
+""""""""""""""""""""""""
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+"
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+
+"""""""""""""""""""""
+"" snakemake syntax "
+"""""""""""""""""""""
+au BufNewFile,BufRead Snakefile set syntax=snakemake
+au BufNewFile,BufRead *.smk set syntax=snakemake
+
+"""""""""""""""
+" Spell check "
+"""""""""""""""
+"set spell spelllang=en_gb
+set spellfile=$HOME/.vim/spell/en.utf-8.add
+
+""""""""""""
+" twitvim
+""""""""""""
+"let twitvim_enable_perl = 1
+let twitvim_enable_python3 = 1
+
+
+""""""""
+" ncm2-look.vim
+""""""""
+let g:ncm2_look_mark = '👀'
